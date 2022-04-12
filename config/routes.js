@@ -1,5 +1,5 @@
 const express = require('express')
-const upload = require('../middleware/uploadMiddleware');
+// const upload = require('../middleware/uploadMiddleware');
 const route = new express.Router()
 const {translation} = require('../controller/translation')
 const {addProgramType,getProgramTypes,getProgramType,deleteProgramType} = require('../controller/prograqm_type')
@@ -19,7 +19,7 @@ route.get('/getPrograms', getPrograms)
 route.get('/getProgram/:id', getProgramById)
 route.put('/editProgram/:id', editProgram)
 route.delete('/deleteProgram/:id', deleteProgram)
-route.post('/upload-image', upload, uploadImage )
+// route.post('/upload-image', upload, uploadImage )
 route.get('/getImage/:key', getFile)
 
 
