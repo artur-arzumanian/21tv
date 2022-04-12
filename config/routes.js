@@ -6,6 +6,9 @@ const {addProgramType,getProgramTypes,getProgramType,deleteProgramType} = requir
 const {addProgram,getPrograms,getProgramById,editProgram,deleteProgram} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
 
+route.get('/test', (req, res) => {
+  res.send("This is test");
+})
 route.post('/translation', translation)
 route.post('/addProgram_type', addProgramType)
 route.get('/getProgramTypes', getProgramTypes)
