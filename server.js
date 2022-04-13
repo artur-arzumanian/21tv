@@ -10,9 +10,9 @@ app.use(router)
 
 const dir = './public/images';
 
-// if (!fs.existsSync(dir)){
-//     fs.mkdirSync(dir);
-// }
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
 
 const port = process.env.PORT ||  process.env.LOCAL_PORT
 
