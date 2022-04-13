@@ -19,9 +19,7 @@ exports.addProgramType = async (req,res) => {
   }
 }
 
-exports.getProgramTypes = async (req,res)=>{
-  console.log("httsd2555");
-
+exports.getProgramTypes = async (req,res)=>{ 
   try{
     const program_types = await ProgramType.find({})
     if(!program_types){
