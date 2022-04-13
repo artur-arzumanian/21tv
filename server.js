@@ -1,11 +1,19 @@
 const express = require('express')
 const router = require('./config/routes')
+const fs = require('fs');
 require('./db/mongoose.js')
 require('dotenv').config()
 const app = express()
 app.use(express.json())
 app.use(express.static('./public'));
 app.use(router)
+
+const dir = './public/images';
+
+// if (!fs.existsSync(dir)){
+//     fs.mkdirSync(dir);
+// }
+
 const port = process.env.PORT ||  process.env.LOCAL_PORT
 
 app.listen(port, ()=>{
