@@ -17,7 +17,7 @@ exports.uploadPic = async (file)=>{
   };
   try {
     const awsResponse = await s3.upload(params).promise();
-    fs.unlinkSync(file.path)
+    // fs.unlinkSync(file.path)
     return {error: false, url: awsResponse.Location }
   }  catch (err) {
     return {error: true, message: err.message};
