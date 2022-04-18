@@ -17,8 +17,8 @@ exports.uploadPic = async (file)=>{
   };
   try {
     const awsResponse = await s3.upload(params).promise();
-    // fs.unlinkSync(file.path)
-    return {error: false, url: awsResponse.Location }
+    fs.unlinkSync(file.path)
+    return {error: false, url: awsResponse.Location, key: awsResponse.Key }
   }  catch (err) {
     return {error: true, message: err.message};
   }
@@ -35,7 +35,6 @@ exports.getFileStream = async (fileKey) => {
     Key: fileKey,
     Bucket: process.env.AWS_S3_BUCKET_NAME    
   }
-
   try {
     return  await s3.getObject(downloadParams).createReadStream()   
   } catch (error) {

@@ -1,7 +1,6 @@
 const Program = require('../model/program')
 const ProgramType = require('../model/prograqm_type')
 
-
 exports.addProgram = async (req,res) => {
 
   if(Object.keys(req.body).length === 0){
