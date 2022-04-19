@@ -8,10 +8,10 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }
-   
-    const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY)   
+
+    const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY)
     const admin = await Admin.findOne({_id: decoded._id})
- 
+    
     if(!admin){
       throw new Error()
     }

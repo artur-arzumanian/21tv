@@ -7,8 +7,7 @@ const AdminSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
-
+    trim: true
   },
 
   email:{
@@ -17,17 +16,16 @@ const AdminSchema = mongoose.Schema({
     unique:true,
     trim: true,
     validate(value){
-        if(!validator.isEmail(value)){
-            throw new Error('Email is invalid!')
-        }
+      if(!validator.isEmail(value)){
+        throw new Error('Email is invalid!')
+      }
     }
-
   },
+
   password:{
     type:String,
     required:true,
     trim:true,
-    minlength: 7,
     validate(value){
       if(validator.isEmpty(value)){
         throw new Error('Please enter your password!')
@@ -42,13 +40,7 @@ const AdminSchema = mongoose.Schema({
   isAdmin: {
     type: Boolean,
     default: false
-  },
-
-  // tokens:[{
-  //   token:{
-  //     type:String  
-  //   }
-  // }],
+  }, 
 
   token:{
     type: String,
@@ -57,16 +49,9 @@ const AdminSchema = mongoose.Schema({
 
 })
 
-// AdminSchema.methods.generateAuthToken = async function() {
-//   const admin = this
-//   const token = jwt.sign({ _id: admin._id.toString(), email: admin.email }, process.env.JWT_PRIVATE_KEY,{expiresIn: '1h'});
-//   admin.tokens = admin.tokens.concat({token})
-//   await admin.save()
-//   return token
-// };
 AdminSchema.methods.generateAuthToken = async function() {
   const admin = this
-  const token = jwt.sign({ _id: admin._id.toString(), email: admin.email }, process.env.JWT_PRIVATE_KEY,{expiresIn: '1m'});
+  const token = jwt.sign({ _id: admin._id.toString(), email: admin.email }, process.env.JWT_PRIVATE_KEY,{expiresIn: '1d'});
   admin.token = token
   await admin.save()
   return token
@@ -75,7 +60,7 @@ AdminSchema.methods.generateAuthToken = async function() {
 AdminSchema.pre('save', async function(next){
   const admin = this
   if(admin.isModified('password')){
-      admin.password = await bcrypt.hash(admin.password, 8)
+    admin.password = await bcrypt.hash(admin.password, 8)
   }
   next()
 })

@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob');
 const nodemailer = require('nodemailer')
-const _ = require('lodash')
 require('dotenv').config()
 
 exports.login = async (req,res) => {
@@ -13,6 +12,11 @@ exports.login = async (req,res) => {
    
   if(!admin){
     return res.status(400).send('Email is not found')
+  }
+
+  const validPass = await bcrypt.compare(password, admin.password)
+  if(!validPass){
+   return res.status(400).send('Invalid passsword')
   }
 
   if(admin.token !== ''){
@@ -29,27 +33,26 @@ exports.login = async (req,res) => {
 
     const decodedJwt = parseJwt(admin.token)
     isExpiredToken = decodedJwt.exp < Math.floor(dateNow.getTime()/1000) ? true : false
-
     if(isExpiredToken){
-      const newToken = await admin.generateAuthToken()
-      return res.status(200).send(newToken); 
+      try{
+        const token = await admin.generateAuthToken()
+        return res.status(200).send(token);   
+    
+      }catch(error){
+       return res.status(400).send(error);
+      } 
     }else{
       return res.status(400).send('Admin has already been logged in ')
     }
     
-  }
- 
-  const validPass = await bcrypt.compare(password, admin.password)
-  if(!validPass){
-   return res.status(400).send('Invalid passsword')
-  }
+  } 
 
   try{
     const token = await admin.generateAuthToken()
-    res.status(200).send(token);   
+    return res.status(200).send(token);   
 
   }catch(error){
-    res.status(400).send(error);
+    return res.status(400).send(error);
   } 
   
 }
@@ -72,7 +75,7 @@ exports.changePassword = async (req,res)=>{
 
   let admin = await Admin.findOne({'token': token})
   if(!admin){
-    res.status(400).send('Admin with this token doesn\'t exist')
+   return res.status(400).send('Admin with this token doesn\'t exist')
   }
   const comparePassword =  bcrypt.compare(oldPassword, admin.password)
   if(!comparePassword){
@@ -87,16 +90,12 @@ exports.changePassword = async (req,res)=>{
     return res.status(400).send({error:' Passwords don\'t match'})
   }
 
-  const passwordObject = {
-    password: newPassword
-  }
-  admin = _.extend(admin, passwordObject)
-
+  admin.password = newPassword
   try{
     await admin.save()
-    res.status(200).send('Password has been changed')
+    return res.status(200).send('Password has been changed')
   }catch(error){
-    res.status(400).send(error)
+    return res.status(400).send(error)
   }
 
 }
@@ -162,7 +161,7 @@ exports.resetPassword = async (req,res) => {
 
     admin.password = password
     await admin.save()
-    res.status(200).send("password reset sucessfully.");
+    return res.status(200).send("password reset sucessfully.");
   }catch (error) {
     res.send("An error occured");
     console.log(error);

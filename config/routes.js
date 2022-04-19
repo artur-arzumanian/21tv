@@ -1,12 +1,13 @@
 const express = require('express')
 const upload = require('../middleware/uploadMiddleware');
+const auth = require('../middleware/auth')
 const route = new express.Router()
 const {translation} = require('../controller/translation')
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
 const {addProgram, getPrograms, getProgramById, editProgram, deleteProgram} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
-const auth = require('../middleware/auth')
+
 
 
 route.post('/translation',auth, translation)
