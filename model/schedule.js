@@ -1,4 +1,4 @@
-const mongoose =require('mongoose')
+const mongoose = require('mongoose')
 
 const scheduleSchema = mongoose.Schema({
   startDate: {
@@ -14,6 +14,11 @@ const scheduleSchema = mongoose.Schema({
   custom: {
     type: Number,
     required: true
-  }
+  },
+
+  
 
 })
+
+const Schedule = mongoose.model('schedule', scheduleSchema)
+module.exports = Schedule

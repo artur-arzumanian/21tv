@@ -1,7 +1,6 @@
 const Admin = require('../../model/admin')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const atob = require('atob');
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
@@ -19,54 +18,28 @@ exports.login = async (req,res) => {
    return res.status(400).send('Invalid passsword')
   }
 
-  if(admin.token !== ''){
-    let isExpiredToken = false;
-    let dateNow = new Date();
-
-    const parseJwt = (token) => {
-      try {
-        return JSON.parse(atob(token.split('.')[1]));
-      } catch (e) {
-        return null;
-      }
-    };
-
-    const decodedJwt = parseJwt(admin.token)
-    isExpiredToken = decodedJwt.exp < Math.floor(dateNow.getTime()/1000) ? true : false
-    if(isExpiredToken){
+  if (admin.token == ''){
       try{
         const token = await admin.generateAuthToken()
         return res.status(200).send(token);   
     
-      }catch(error){
+      } catch(error) {
        return res.status(400).send(error);
       } 
-    }else{
+  } else {
       return res.status(400).send('Admin has already been logged in ')
-    }
-    
-  } 
-
-  try{
-    const token = await admin.generateAuthToken()
-    return res.status(200).send(token);   
-
-  }catch(error){
-    return res.status(400).send(error);
-  } 
-  
+  }
 }
 
 exports.logout =  async (req,res)=>{
-  try{
-    req.admin.token = ''
-   
-    await req.admin.save()
-    res.send({message: "You are logged out"})
-  }catch(e){
-    res.status(500).send(e)
-  }
-  
+  try {
+    let admin = await Admin.findOneAndUpdate({_id: req.body.id}, {token: ""}, {
+      new: true
+    })
+    return res.send({message: "You are logged out"})
+  } catch(e) {
+    return res.status(500).send(e)
+  } 
 }
 
 exports.changePassword = async (req,res)=>{

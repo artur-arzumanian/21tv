@@ -10,6 +10,7 @@ const {login,logout,changePassword,forgotPassword,resetPassword} = require('../c
 
 
 
+
 route.post('/translation',auth, translation)
 route.post('/add-program-type',auth, addProgramType)
 route.get('/get-program-types',auth, getProgramTypes)
@@ -26,7 +27,7 @@ route.get('/get-image/:key',auth, getFile)
 
 // admin route
 route.post('/admin/login', login)
-route.get('/admin/logout', auth, logout)
+route.post('/admin/logout', logout)
 route.put('/admin/change-password', auth, changePassword)
 route.post('/admin/forgot-password', forgotPassword)
 route.post('/admin/reset-password',resetPassword)
