@@ -5,14 +5,17 @@ const programSchema = new mongoose.Schema({
     type: String,
     required:true
   },
+
   describtion: {
     type: String
   },
+
   picture: {
     type: String
   },
+
   program_type: {
-    type: Object,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'ProgramType'
   }
 })

@@ -6,7 +6,6 @@ require('dotenv').config()
 const auth = async (req, res, next) => {
   try{
     const token = await req.header('Authorization').replace('Bearer ', '')
-    console.log(token)
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }else{
