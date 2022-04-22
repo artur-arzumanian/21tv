@@ -41,7 +41,6 @@ const scheduleSchema = mongoose.Schema({
     type: Number
   }
   
-
 })
 
 const Schedule = mongoose.model('schedule', scheduleSchema)

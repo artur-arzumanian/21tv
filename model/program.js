@@ -3,20 +3,25 @@ const mongoose = require('mongoose')
 const programSchema = new mongoose.Schema({
   name: {
     type: String,
-    required:true
+    required:true,
+    unique: true
   },
 
-  describtion: {
-    type: String
+  description: {
+    type: String,
+    required: true
   },
 
   picture: {
-    type: String
+    type: String,
+    required: true
+
   },
 
-  program_type: {
+  program_type_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'ProgramType'
+    ref: 'ProgramType',
+    required: true
   }
 })
 

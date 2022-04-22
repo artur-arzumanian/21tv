@@ -9,7 +9,7 @@ exports.addProgram = async (req,res) => {
 
   let program = await Program.findOne({name: req.body.name})
   if(program){
-    return res.status(400).send({error: 'Word with this name already exist.'})
+    return res.status(400).send({error: 'Program name must be unique.'})
   }
 
   const type_id = req.body.program_type_id
@@ -22,7 +22,7 @@ exports.addProgram = async (req,res) => {
     name: req.body.name,
     describtion: req.body.describtion,
     picture: req.body.picture,
-    program_type: {_id:  program_type._id}
+    program_type: {_id: program_type._id}
   })
   try{
     await program.save()
@@ -63,24 +63,23 @@ exports.editProgram = async (req,res)=>{
   if(Object.keys(req.body).length === 0){
     return res.status(400).send({message: "Content can not be empty"})
   }
-  const {name,describtion,picture} = req.body
-  let program_type = await ProgramType.findOne({_id: req.body.program_type_id})  
-  if(!program_type){
-    return res.status(400).send({error: 'Program type not found.'})
+  let {description,picture,program_type_id} = req.body
+  let program_type = await ProgramType.findOne({_id: program_type_id})
+  if(program_type){
+    program_type_id = program_type._id
   }
  
   try{
-    const updated = await Program.findByIdAndUpdate({_id: id}, {
-      name,
-      describtion,
+    const updatedProgram = await Program.findByIdAndUpdate({_id: id}, {
+      description,
       picture,
-      program_type: {_id:  program_type._id}
+      program_type_id
     },{ new: true })
-    if(!updated){
+    if(!updatedProgram){
       return res.status(400).send({error: `Program with id ${id} does not exist`})
     }
-    await updated.save()
-    res.status(200).send(updated)
+    await updatedProgram.save()
+    res.status(200).send(updatedProgram)
   }catch(error){
     res.status(500).send(error)
   }

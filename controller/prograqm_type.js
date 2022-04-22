@@ -7,7 +7,7 @@ exports.addProgramType = async (req,res) => {
 
   let type = await ProgramType.findOne({name: req.body.name})
   if(type){
-    return res.status(400).send({error: 'Word with this key already exist.'})
+    return res.status(400).send({error: 'Name already exist.'})
   }
 
   type = new ProgramType(req.body)
