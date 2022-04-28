@@ -21,7 +21,6 @@ const auth = async (req, res, next) => {
 
       const decodedJwt = parseJwt(token)
       const admin = await Admin.findOne({_id: decodedJwt._id})
-
       if(!admin){
         throw new Error()
       }
@@ -29,8 +28,9 @@ const auth = async (req, res, next) => {
       if (admin.isAdmin === false) {
         return res.status(403).send({error: 'You haven\'t permission'})
       }
+
       if (decodedJwt.exp < Math.floor(dateNow.getTime()/1000)){
-        return res.status(403).send({error: 'Token is expired. Please login again'})
+        return res.status(403).send({error: 'Token was expired. Please login again'})
       }else {
         jwt.verify(token, process.env.JWT_PRIVATE_KEY)
         req.token = token

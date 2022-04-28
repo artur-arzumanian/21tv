@@ -74,13 +74,17 @@ AdminSchema.methods.toJSON = function(){
 
 const Admin = mongoose.model('admin', AdminSchema);
 
-// const admin = Admin.create({
-//   name: "admin2",
-//   email: "admin2@example.com",
-//   password: "!123Dar21",
-//   isAdmin: true
-// })
-// console.log(admin);
+// const add = async () => {
+//   const admin = await Admin.create({
+//     name: "admin",
+//     email: "21tv.development@gmail.com",
+//     password: "!123Dar21",
+//     isAdmin: true
+//   })
+
+//   console.log(admin);
+// }
+// add()
 
 module.exports = Admin
 

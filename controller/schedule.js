@@ -1,8 +1,40 @@
 const Schedule = require('../model/schedule')
+const { RRule, rrulestr }  = require('rrule')
+const {getDate, getMilliseconds,existingDateTime} = require('../utils/date')
 
 exports.addSchedule = async (req,res)=> {
+  const {startDate,endDate,rRule, appointmentId,img,programId} = req.body  
+  const startTime = getMilliseconds(startDate)
+  const endTime = getMilliseconds(endDate)
+  const rruleDates = rrulestr(rRule).all()
+  const freqType = rrulestr(rRule).options.freq
+  const dates = []
+
+
   
-  const schedule = new Schedule(req.body)  
+  for(let i = 0; i < rruleDates.length; i++){
+    const date = new Date(rruleDates[i])
+    dates.push(getDate(date))
+  }
+ 
+  const existDateTime = await existingDateTime(startTime,endTime,dates)
+  if(existDateTime){
+    return res.status(400).send(existDateTime)
+  }
+ 
+ 
+  const schedule = new Schedule({
+    programId,
+    startDate,
+    endDate,
+    rRule,
+    appointmentId,
+    img,
+    startTime,
+    endTime,
+    dates,
+    freqType
+  })
 
   try{
     await schedule.save()
@@ -16,7 +48,7 @@ exports.getSchedule = async (req,res) => {
   try{
     const schedule = await Schedule.find({})
     if(!schedule){
-      return res.status(404).send({error: `Schedule don\'t exist`})
+      return res.status(404).send({error: `Schedule doesn\'t exist`})
     }
     res.status(200).send(schedule)
   }catch(error){
@@ -28,7 +60,7 @@ exports.getSchedule = async (req,res) => {
 exports.getScheduleById = async (req,res) => {
   const schedule_id = req.params.id
   try{  
-    const schedule = await Program.findOne({_id: schedule_id}) 
+    const schedule = await Schedule.findOne({_id: schedule_id}) 
     res.status(200).send(schedule)
   }catch(error){
     res.status(500).send(error)
@@ -38,15 +70,43 @@ exports.getScheduleById = async (req,res) => {
 
 exports.updateSchedule = async (req,res) => {
   const schedule_id = req.params.id
-  const newSchedule =  { 
-    programId: req.body.programId, 
-    startTime: req.body.startTime,
-    endTime: req.body.endTime,
-    appointmentId: req.body.endTime,
-    img: req.body.img,
-    rRule: req.body.rRule } 
+  let {startDate,endDate,rRule, appointmentId,img,programId} = req.body
+  // let schedule_data = await Schedule.findOne({_id: schedule_id})
+  // console.log(schedule_data);
+  // if(!startDate) startDate = schedule_data.startDate 
+  // if(!endDate) endDate = schedule_data.endDate 
+  // if(!rRule) rRule = schedule_data.rRule
+  
+  const startTime = getMilliseconds(startDate)
+  const endTime = getMilliseconds(endDate)
+  const rruleDates = rrulestr(rRule).all()
+  const freqType = rrulestr(rRule).options.freq
+  const dates = []
+  
+  for(let i = 0; i < rruleDates.length; i++){
+    const date = new Date(rruleDates[i])
+    dates.push(getDate(date))
+  }
+ 
+  const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id)
+  if(existDateTime){
+    return res.status(400).send(existDateTime)
+  }
+
+  const editedSchedule = {
+    programId,
+    startDate,
+    endDate,
+    rRule,
+    appointmentId,
+    img,
+    startTime,
+    endTime,
+    dates,
+    freqType
+  }
   try{
-    const updatedSchedule = await Schedule.findByIdAndUpdate({_id: schedule_id}, newSchedule, { new: true })
+    const updatedSchedule = await Schedule.findByIdAndUpdate({_id: schedule_id}, editedSchedule, { new: true })
     await updatedSchedule.save()
     res.status(200).send(updatedSchedule)
   }catch(error){

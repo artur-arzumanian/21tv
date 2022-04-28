@@ -15,25 +15,29 @@ exports.login = async (req,res) => {
 
   const validPass = await bcrypt.compare(password, admin.password)
   if(!validPass){
-   return res.status(400).send('Invalid passsword')
+    return res.status(400).send('Invalid passsword')
   }
 
   if (admin.token == ''){
-      try{
-        const token = await admin.generateAuthToken()
-        return res.status(200).send(token);   
+    try{
+      const token = await admin.generateAuthToken()
+      return res.status(200).send(token);   
     
-      } catch(error) {
-       return res.status(400).send(error);
-      } 
+    } catch(error) {
+      return res.status(400).send(error);
+    } 
   } else {
-      return res.status(400).send('Admin has already been logged in ')
+    return res.status(400).send('Admin has already been logged in ')
   }
 }
 
 exports.logout =  async (req,res)=>{
+  const id = req.body.id
+  if(!id){
+    return res.status(400).send(error)
+  }
   try {
-    let admin = await Admin.findOneAndUpdate({_id: req.body.id}, {token: ""}, {
+    await Admin.findOneAndUpdate({_id: id}, {token: ""}, {
       new: true
     })
     return res.send({message: "You are logged out"})

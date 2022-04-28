@@ -9,13 +9,21 @@ const scheduleSchema = mongoose.Schema({
   },
 
   startTime: {
-    type: String,
-    required: true
+    type: Number
   },
 
   endTime: {
-    type: String,
-    required: true
+    type: Number
+  },
+
+  startDate: {
+    type: Date,
+    equired: true
+  },
+  
+  endDate: {
+    type: Date,
+    equired: true
   },
 
   appointmentId: {
@@ -33,14 +41,14 @@ const scheduleSchema = mongoose.Schema({
     required: true
   },
 
-  notes: {
-    type: String
+  dates: {
+    type: Array
   },
 
-  id: {
+  freqType: {
     type: Number
   }
-  
+
 })
 
 const Schedule = mongoose.model('schedule', scheduleSchema)

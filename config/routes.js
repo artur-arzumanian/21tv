@@ -1,13 +1,13 @@
 const express = require('express')
+const route = new express.Router()
 const upload = require('../middleware/uploadMiddleware');
 const auth = require('../middleware/auth')
-const route = new express.Router()
 const {translation} = require('../controller/translation')
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
 const {addProgram, getPrograms, getProgramById, editProgram, deleteProgram} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
-const {addSchedule,getSchedule,updateSchedule,deleteSchedule} = require('../controller/schedule')
+const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
 const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory} = require('../controller/program_history')
 
 
@@ -39,11 +39,11 @@ route.put('/edit-program/:id',auth, editProgram)
 route.delete('/delete-program/:id',auth, deleteProgram)
 
 //schedule route
-route.post('/add-schedule', addSchedule)
-route.get('/get-schedule', getSchedule)
-route.get('/get-schedule/:id', getSchedule)
-route.put('/update-schedule/:id', updateSchedule)
-route.delete('/delete-schedule/:id', deleteSchedule)
+route.post('/add-schedule', auth, addSchedule)
+route.get('/get-schedules', getSchedule)
+route.get('/get-schedule/:id', getScheduleById)
+route.put('/update-schedule/:id', auth, updateSchedule)
+route.delete('/delete-schedule/:id', auth, deleteSchedule)
 
 //program history routes
 route.post('/add-program-history',auth, addProgramHistory)
