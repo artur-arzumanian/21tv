@@ -44,7 +44,7 @@ exports.addSchedule = async (req,res)=> {
 exports.getSchedule = async (req,res) => {
   try{
     const schedule = await Schedule.find({})
-    if(!schedule){
+    if(!schedule || schedule === {}){
       return res.status(404).send({error: `Schedule doesn\'t exist`})
     }
     res.status(200).send(schedule)
@@ -57,7 +57,7 @@ exports.getSchedule = async (req,res) => {
 exports.getScheduleById = async (req,res) => {
   const schedule_id = req.params.id
   try{  
-    const schedule = await Schedule.findOne({_id: schedule_id}) 
+    const schedule = await Schedule.findOne({_id: schedule_id})
     res.status(200).send(schedule)
   }catch(error){
     res.status(500).send(error)

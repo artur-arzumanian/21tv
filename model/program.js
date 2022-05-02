@@ -20,7 +20,7 @@ const programSchema = new mongoose.Schema({
 
   program_type_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'ProgramType',
+    ref: 'program_type',
     required: true
   }
 })

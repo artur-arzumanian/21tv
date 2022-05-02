@@ -5,7 +5,7 @@ const scheduleSchema = mongoose.Schema({
   programId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Program'
+    ref: 'program'
   },
 
   startTime: {
