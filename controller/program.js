@@ -24,14 +24,13 @@ exports.addProgram = async (req,res) => {
     picture: req.body.picture,
     program_type: {_id: program_type._id}
   })
+
   try{
     await program.save()
     res.status(201).send(program)
   }catch(error){
     res.status(500).send(error);
-  }
-
- 
+  } 
 }
 
 exports.getPrograms = async (req,res)=>{
@@ -83,7 +82,6 @@ exports.editProgram = async (req,res)=>{
   }catch(error){
     res.status(500).send(error)
   }
-
 }
 
 exports.deleteProgram = async (req,res) => {
@@ -97,7 +95,6 @@ exports.deleteProgram = async (req,res) => {
   }catch(error){
     res.status(500).send(error)
   }
-
 }
 
 

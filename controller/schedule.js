@@ -1,5 +1,5 @@
 const Schedule = require('../model/schedule')
-const { RRule, rrulestr }  = require('rrule')
+const { rrulestr }  = require('rrule')
 const {getDate, getMilliseconds,existingDateTime} = require('../utils/date')
 
 exports.addSchedule = async (req,res)=> {
@@ -9,8 +9,6 @@ exports.addSchedule = async (req,res)=> {
   const rruleDates = rrulestr(rRule).all()
   const freqType = rrulestr(rRule).options.freq
   const dates = []
-
-
   
   for(let i = 0; i < rruleDates.length; i++){
     const date = new Date(rruleDates[i])
@@ -21,8 +19,7 @@ exports.addSchedule = async (req,res)=> {
   if(existDateTime){
     return res.status(400).send(existDateTime)
   }
- 
- 
+
   const schedule = new Schedule({
     programId,
     startDate,
@@ -71,12 +68,6 @@ exports.getScheduleById = async (req,res) => {
 exports.updateSchedule = async (req,res) => {
   const schedule_id = req.params.id
   let {startDate,endDate,rRule, appointmentId,img,programId} = req.body
-  // let schedule_data = await Schedule.findOne({_id: schedule_id})
-  // console.log(schedule_data);
-  // if(!startDate) startDate = schedule_data.startDate 
-  // if(!endDate) endDate = schedule_data.endDate 
-  // if(!rRule) rRule = schedule_data.rRule
-  
   const startTime = getMilliseconds(startDate)
   const endTime = getMilliseconds(endDate)
   const rruleDates = rrulestr(rRule).all()
