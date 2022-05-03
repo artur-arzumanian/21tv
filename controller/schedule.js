@@ -3,7 +3,7 @@ const { rrulestr }  = require('rrule')
 const {getDate, getMilliseconds,existingDateTime} = require('../utils/date')
 
 exports.addSchedule = async (req,res)=> {
-  const {startDate,endDate,rRule, appointmentId,img,programId} = req.body  
+  const {startDate,endDate,rRule, appointmentId,image,programId} = req.body  
   const startTime = getMilliseconds(startDate)
   const endTime = getMilliseconds(endDate)
   const rruleDates = rrulestr(rRule).all()
@@ -26,7 +26,7 @@ exports.addSchedule = async (req,res)=> {
     endDate,
     rRule,
     appointmentId,
-    img,
+    image,
     startTime,
     endTime,
     dates,
@@ -67,7 +67,7 @@ exports.getScheduleById = async (req,res) => {
 
 exports.updateSchedule = async (req,res) => {
   const schedule_id = req.params.id
-  let {startDate,endDate,rRule, appointmentId,img,programId} = req.body
+  let {startDate,endDate,rRule, appointmentId,image,programId} = req.body
   const startTime = getMilliseconds(startDate)
   const endTime = getMilliseconds(endDate)
   const rruleDates = rrulestr(rRule).all()
@@ -90,7 +90,7 @@ exports.updateSchedule = async (req,res) => {
     endDate,
     rRule,
     appointmentId,
-    img,
+    image,
     startTime,
     endTime,
     dates,

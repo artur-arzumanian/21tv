@@ -31,7 +31,7 @@ const scheduleSchema = mongoose.Schema({
     required: true
   },
 
-  img: {
+  image: {
     type: String,
     required: true
   },

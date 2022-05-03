@@ -12,7 +12,7 @@ const programSchema = new mongoose.Schema({
     required: true
   },
 
-  picture: {
+  image: {
     type: String,
     required: true
 

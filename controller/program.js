@@ -21,7 +21,7 @@ exports.addProgram = async (req,res) => {
   program = new Program({
     name: req.body.name,
     describtion: req.body.describtion,
-    picture: req.body.picture,
+    image: req.body.image,
     program_type: {_id: program_type._id}
   })
 
@@ -62,7 +62,7 @@ exports.editProgram = async (req,res)=>{
   if(Object.keys(req.body).length === 0){
     return res.status(400).send({message: "Content can not be empty"})
   }
-  let {description,picture,program_type_id} = req.body
+  let {description,image,program_type_id} = req.body
   let program_type = await ProgramType.findOne({_id: program_type_id})
   if(program_type){
     program_type_id = program_type._id
@@ -71,7 +71,7 @@ exports.editProgram = async (req,res)=>{
   try{
     const updatedProgram = await Program.findByIdAndUpdate({_id: id}, {
       description,
-      picture,
+      image,
       program_type_id
     },{ new: true })
     if(!updatedProgram){
