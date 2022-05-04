@@ -34,5 +34,5 @@ const historySchema = mongoose.Schema({
   }
 },{timestamps: true})
 
-const ProgramHistory = mongoose.model('program-history', historySchema)
+const ProgramHistory = mongoose.model('program_history', historySchema)
 module.exports = ProgramHistory

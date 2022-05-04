@@ -18,12 +18,12 @@ const scheduleSchema = mongoose.Schema({
 
   startDate: {
     type: Date,
-    equired: true
+    required: true
   },
   
   endDate: {
     type: Date,
-    equired: true
+    required: true
   },
 
   appointmentId: {

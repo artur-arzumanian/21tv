@@ -9,6 +9,11 @@ const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
 const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory} = require('../controller/program_history')
+const {addSlider,getSliders,getSliderById,editSlider,deleteSlider} = require('../controller/homepage/slider')
+const {addLiveLink,getLiveLink,getLiveLinkById,deleteLiveLink} = require('../controller/homepage/live')
+const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
+const {addFooter,getFooter,getFooterById,editFooter,deleteFooter} = require('../controller/homepage/footer')
+const {addBanner,getBanners,getBannerById,editBanner,deleteBanner} = require('../controller/homepage/program-show_banners')
 
 
 // admin route
@@ -27,8 +32,8 @@ route.post('/translation',auth, translation)
 
 //program-types route
 route.post('/add-program-type',auth, addProgramType)
-route.get('/get-program-types',auth, getProgramTypes)
-route.get('/get-program-type/:id',auth, getProgramType)
+route.get('/get-program-types', getProgramTypes)
+route.get('/get-program-type/:id', getProgramType)
 route.delete('/delete-program-type/:id',auth, deleteProgramType)
 
 //program route
@@ -52,5 +57,38 @@ route.get('/get-program-history/:id', getProgramHistoryById)
 route.put('/edit-program-history/:id', auth,editProgramHistory)
 route.delete('/delete-program-history/:id', auth, deleteProgramHistory)
 
+//homepage slider routes
+route.post('/add-slider', addSlider)
+route.get('/get-sliders', getSliders)
+route.get('/get-slider/:id', getSliderById)
+route.put('/edit-slider/:id', editSlider)
+route.delete('/delete-slider/:id', deleteSlider)
+
+//homepage Live Link routes
+route.post('/add-livelink', addLiveLink)
+route.get('/get-livelinks', getLiveLink)
+route.get('/get-livelink/:id', getLiveLinkById)
+route.delete('/delete-livelink/:id', deleteLiveLink)
+
+//homepage Banners routes
+route.post('/add-banner', addBanner)
+route.get('/get-banners', getBanners)
+route.get('/get-banner/:id', getBannerById)
+route.put('/edit-banner/:id', editBanner)
+route.delete('/delete-banner/:id', deleteBanner)
+
+//homepage Social Media Link routes
+route.post('/add-medialink', addSocialMediaLink)
+route.get('/get-medialinks', getSocialMediaLinks)
+route.get('/get-medialink/:id', getSocialMediaLinkById)
+route.put('/edit-medialink/:id', editSocialMediaLink)
+route.delete('/delete-medialink/:id', deleteSocialMediaLink)
+
+//homepage Footer routes
+route.post('/add-footer', addFooter)
+route.get('/get-footer', getFooter)
+route.get('/get-footer/:id', getFooterById)
+route.delete('/delete-footer/:id', deleteFooter)
+route.put('/edit-footer/:id', editFooter)
 
 module.exports = route

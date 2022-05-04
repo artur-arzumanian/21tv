@@ -20,9 +20,9 @@ exports.addProgram = async (req,res) => {
 
   program = new Program({
     name: req.body.name,
-    describtion: req.body.describtion,
+    description: req.body.description,
     image: req.body.image,
-    program_type: {_id: program_type._id}
+    program_type_id: {_id: program_type._id}
   })
 
   try{
