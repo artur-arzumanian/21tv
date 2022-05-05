@@ -47,10 +47,9 @@ exports.getPrograms = async (req,res)=>{
 }
 
 exports.getProgramById = async (req,res)=>{
-
-  const progrm_id = req.params.id
-  try{  
-    const program = await Program.findOne({_id: progrm_id}) 
+  const type_id = req.params.id
+  try{
+    const program = await Program.find({program_type_id: type_id})
     res.status(200).send(program)
   }catch(error){
     res.status(500).send(error)
