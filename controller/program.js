@@ -22,7 +22,8 @@ exports.addProgram = async (req,res) => {
     name: req.body.name,
     description: req.body.description,
     image: req.body.image,
-    program_type_id: {_id: program_type._id}
+    banners_order: req.body.banners_order,
+    program_type_id: program_type._id
   })
 
   try{
