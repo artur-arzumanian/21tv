@@ -4,12 +4,12 @@ const upload = require('../middleware/uploadMiddleware');
 const auth = require('../middleware/auth')
 const {translation} = require('../controller/translation')
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
-const {addProgram, getPrograms, getProgramById, editProgram, deleteProgram} = require('../controller/program')
+const {addProgram, getPrograms, getProgramById, editProgram, deleteProgram, saveBanners} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
 const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory} = require('../controller/program_history')
-const {addSlider,getSliders,getSliderById,editSlider,deleteSlider} = require('../controller/homepage/slider')
+const {addSlider,getSliders,getSliderById,editSlider,deleteSlider, saveSlider} = require('../controller/homepage/slider')
 const {addLiveLink,getLiveLink,getLiveLinkById,deleteLiveLink} = require('../controller/homepage/live')
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
 const {addFooter,getFooter,getFooterById,editFooter,deleteFooter} = require('../controller/homepage/footer')
@@ -42,6 +42,7 @@ route.get('/get-programs', getPrograms)
 route.get('/get-program/:id', getProgramById)
 route.put('/edit-program/:id',auth, editProgram)
 route.delete('/delete-program/:id',auth, deleteProgram)
+route.put('/update-banners', saveBanners)
 
 //schedule route
 route.post('/add-schedule', auth, addSchedule)
@@ -62,11 +63,12 @@ route.post('/add-slider', addSlider)
 route.get('/get-sliders', getSliders)
 route.get('/get-slider/:id', getSliderById)
 route.put('/edit-slider/:id', editSlider)
+route.put('/save-slider', saveSlider)
 route.delete('/delete-slider/:id', deleteSlider)
 
 //homepage Live Link routes
 route.post('/add-livelink', addLiveLink)
-route.get('/get-livelinks', getLiveLink)
+route.get('/get-livelink', getLiveLink)
 route.get('/get-livelink/:id', getLiveLinkById)
 route.delete('/delete-livelink/:id', deleteLiveLink)
 
@@ -78,11 +80,11 @@ route.put('/edit-banner/:id', editBanner)
 route.delete('/delete-banner/:id', deleteBanner)
 
 //homepage Social Media Link routes
-route.post('/add-medialink', addSocialMediaLink)
-route.get('/get-medialinks', getSocialMediaLinks)
-route.get('/get-medialink/:id', getSocialMediaLinkById)
-route.put('/edit-medialink/:id', editSocialMediaLink)
-route.delete('/delete-medialink/:id', deleteSocialMediaLink)
+route.post('/add-media-link', addSocialMediaLink)
+route.get('/get-media-links', getSocialMediaLinks)
+route.get('/get-media-link/:id', getSocialMediaLinkById)
+route.put('/edit-media-link/:id', editSocialMediaLink)
+route.delete('/delete-media-link/:id', deleteSocialMediaLink)
 
 //homepage Footer routes
 route.post('/add-footer', addFooter)

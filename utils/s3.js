@@ -7,13 +7,14 @@ exports.uploadPic = async (file)=>{
   const s3 = new S3({
     accessKeyId: process.env.AWS_KEY,
     secretAccessKey: process.env.AWS_SECRET,
-    region: process.env.AWS_S3_REGION
+    region: process.env.AWS_S3_REGION,
+    acl: 'public-read',
   });
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: file.filename,
-    Body: fileStream,
+    Body: fileStream
   };
   try {
     const awsResponse = await s3.upload(params).promise();

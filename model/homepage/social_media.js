@@ -1,22 +1,30 @@
 const mongoose = require('mongoose')
 
 const socialMediaSchema = mongoose.Schema({
-  text: {
-    title: {
-      type: String
-    },
-
-    description: {
-      type: String
-    }
+  
+  title: {
+     type: String
   },
 
-  links: {
-    facebook: {type: String},
-    twitter: {type: String},
-    youtube: {type: String},
-    instagram: {type: String}
+  description: {
+    type: String
   },
+
+  facebookPage: {
+    type: String
+  },
+
+  twitterPage: {
+    type: String
+  },
+
+  youtubePage: {
+    type: String
+  },
+  instagramPage: {
+    type: String
+  }
+  
 })
 
 const Media = mongoose.model('social_media', socialMediaSchema)

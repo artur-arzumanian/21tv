@@ -21,12 +21,7 @@ const sliderSchema = mongoose.Schema({
     required: true,
   },
 
-  order: {
-    type: Number,
-    required: true,
-  },
-
-  serialID: {
+  slider_order: {
     type: Number,
     required: true,
   }

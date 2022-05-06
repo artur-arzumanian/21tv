@@ -3,10 +3,6 @@ const ProgramType = require('../model/prograqm_type')
 
 exports.addProgram = async (req,res) => {
 
-  if(Object.keys(req.body).length === 0){
-    return res.status(400).send({message: "Content can not be empty"})
-  }
-
   let program = await Program.findOne({name: req.body.name})
   if(program){
     return res.status(400).send({error: 'Program name must be unique.'})
@@ -16,7 +12,7 @@ exports.addProgram = async (req,res) => {
   let program_type = await ProgramType.findOne({_id: type_id})
   if(!program_type){
     return res.status(400).send({error: 'Program type not found.'})
-  }
+  }  
 
   program = new Program({
     name: req.body.name,
@@ -30,7 +26,7 @@ exports.addProgram = async (req,res) => {
     await program.save()
     res.status(201).send(program)
   }catch(error){
-    res.status(500).send(error);
+    res.status(500).send(error.message);
   } 
 }
 
@@ -43,7 +39,7 @@ exports.getPrograms = async (req,res)=>{
     }
     res.status(200).send(programs)
   }catch(error){
-    res.status(500).send(error)
+    res.status(500).send(error.message)
   }
 }
 
@@ -53,7 +49,7 @@ exports.getProgramById = async (req,res)=>{
     const program = await Program.find({program_type_id: type_id})
     res.status(200).send(program)
   }catch(error){
-    res.status(500).send(error)
+    res.status(500).send(error.message)
   }
 }
 
@@ -80,7 +76,7 @@ exports.editProgram = async (req,res)=>{
     await updatedProgram.save()
     res.status(200).send(updatedProgram)
   }catch(error){
-    res.status(500).send(error)
+    res.status(500).send(error.message)
   }
 }
 
@@ -93,8 +89,23 @@ exports.deleteProgram = async (req,res) => {
     }
     res.status(200).send(deletedProgram)
   }catch(error){
-    res.status(500).send(error)
+    res.status(500).send(error.message)
   }
 }
 
+exports.saveBanners = async (req,res) => {
+  try {
+    req.body.map(async (banner) => {
+      const program = await Program.findById(banner.id);
+      if (program) {
+        program.banners_order = banner.banners_order;    
+        await program.save()
+      } 
+    });
+    res.status(200).send("Banners orders had been updated")
+  } catch(error) {
+    res.status(500).send(error.message)
+  }  
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 

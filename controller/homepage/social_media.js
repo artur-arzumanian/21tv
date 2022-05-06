@@ -3,13 +3,13 @@ const Media = require('../../model/homepage/social_media')
 exports.addSocialMediaLink = async (req,res) => {
   const socialLink = new Media(req.body)
   if(!socialLink){
-    res.status(400).send(error)
+    res.status(400).send(error.message)
   }
   try{
     await socialLink.save();
     res.status(201).send(socialLink)
   }catch(error){
-    res.status(500).send(error)
+    res.status(500).send(error.message)
   }
 }
 
@@ -35,7 +35,6 @@ exports.getSocialMediaLinkById = async (req,res) => {
 exports.editSocialMediaLink = async (req,res) => {
   const id = req.params.id
   const socialMedia = req.body
-  console.log(typeof socialMedia,socialMedia);
   try{
     const editedMedia = await Media.findByIdAndUpdate({_id: id}, socialMedia, {new: true})
     await editedMedia.save()

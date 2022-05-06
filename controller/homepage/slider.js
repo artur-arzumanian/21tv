@@ -2,8 +2,7 @@ const Slider = require('../../model/homepage/slider')
 
 exports.addSlider = async (req, res) => {
   
-  const slider = new Slider(req.body)
-  
+  const slider = new Slider(req.body)  
   try{
     await slider.save()
     res.status(201).send(slider)
@@ -70,4 +69,19 @@ exports.deleteSlider = async (req,res) => {
   }catch(error){
     res.status(500).send(error.message)
   }
+}
+
+exports.saveSlider = async (req,res) => {
+  try {
+    req.body.map(async (slide) => {
+      const slider = await Slider.findById(slide.id);
+      if (slider) {
+        slider.slider_order = slide.slider_order;    
+        await slider.save()
+      } 
+    });
+    res.status(200).send("Slider's orders have been updated")
+  } catch(error) {
+    res.status(500).send(error.message)
+  }  
 }
