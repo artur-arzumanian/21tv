@@ -44,6 +44,16 @@ exports.getPrograms = async (req,res)=>{
 }
 
 exports.getProgramById = async (req,res)=>{
+  const id = req.params.id
+  try{
+    const program = await Program.find({_id: id})
+    res.status(200).send(program)
+  }catch(error){
+    res.status(500).send(error.message)
+  }
+}
+
+exports.getProgramByTypeId = async (req,res)=>{
   const type_id = req.params.id
   try{
     const program = await Program.find({program_type_id: type_id})

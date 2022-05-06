@@ -10,18 +10,19 @@ const socialMediaSchema = mongoose.Schema({
     type: String
   },
 
-  facebookPage: {
+  facebookLink: {
     type: String
   },
 
-  twitterPage: {
+  twitterLink: {
     type: String
   },
 
-  youtubePage: {
+  youtubeLink: {
     type: String
   },
-  instagramPage: {
+  
+  instagramLink: {
     type: String
   }
   

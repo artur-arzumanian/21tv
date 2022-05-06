@@ -37,6 +37,9 @@ exports.editSocialMediaLink = async (req,res) => {
   const socialMedia = req.body
   try{
     const editedMedia = await Media.findByIdAndUpdate({_id: id}, socialMedia, {new: true})
+    if(!editedMedia){
+      return res.status(400).send({error: `Social medai  with id ${id} does not exist`})
+    }
     await editedMedia.save()
     res.status(200).send(editedMedia)
   }catch(error){

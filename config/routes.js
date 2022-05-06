@@ -4,7 +4,7 @@ const upload = require('../middleware/uploadMiddleware');
 const auth = require('../middleware/auth')
 const {translation} = require('../controller/translation')
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
-const {addProgram, getPrograms, getProgramById, editProgram, deleteProgram, saveBanners} = require('../controller/program')
+const {addProgram, getPrograms, getProgramById,getProgramByTypeId, editProgram, deleteProgram, saveBanners} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
@@ -14,7 +14,8 @@ const {addLiveLink,getLiveLink,getLiveLinkById,deleteLiveLink} = require('../con
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
 const {addFooter,getFooter,getFooterById,editFooter,deleteFooter} = require('../controller/homepage/footer')
 const {addBanner,getBanners,getBannerById,editBanner,deleteBanner} = require('../controller/homepage/program-show_banners')
-
+const {addPageContent,getPageContent,editPageContent,deletePageContent} = require('../controller/page-content');
+const { addFace, getFaces,getFaceById,editFace,deleteFace } = require('../controller/faces');
 
 // admin route
 route.post('/admin/login', login)
@@ -40,6 +41,7 @@ route.delete('/delete-program-type/:id',auth, deleteProgramType)
 route.post('/add-program',auth, addProgram)
 route.get('/get-programs', getPrograms)
 route.get('/get-program/:id', getProgramById)
+route.get('/get-program-by-type/:id', getProgramByTypeId)
 route.put('/edit-program/:id',auth, editProgram)
 route.delete('/delete-program/:id',auth, deleteProgram)
 route.put('/update-banners', saveBanners)
@@ -90,7 +92,20 @@ route.delete('/delete-media-link/:id', deleteSocialMediaLink)
 route.post('/add-footer', addFooter)
 route.get('/get-footer', getFooter)
 route.get('/get-footer/:id', getFooterById)
-route.delete('/delete-footer/:id', deleteFooter)
 route.put('/edit-footer/:id', editFooter)
+route.delete('/delete-footer/:id', deleteFooter)
+
+//page content routes
+route.post('/add-page-content', addPageContent)
+route.get('/get-page-contents', getPageContent)
+route.put('/edit-page-content/:id', editPageContent)
+route.delete('/delete-page-content/:id', deletePageContent)
+
+//faces routes
+route.post('/add-face', addFace)
+route.get('/get-faces', getFaces)
+route.get('/get-face/:id', getFaceById)
+route.put('/edit-face/:id', editFace)
+route.delete('/delete-face/:id', deleteFace)
 
 module.exports = route
