@@ -29,7 +29,7 @@ exports.editPageContent = async (req,res) => {
     return res.status(500).send(error.message)
   }
   try{
-    const editedPageContent = await Media.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true})
+    const editedPageContent = await PageContent.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true})
     if(!editedPageContent){
       return res.status(400).send({error: `Page Content  with id ${id} does not exist`})
     }
@@ -42,7 +42,7 @@ exports.editPageContent = async (req,res) => {
 
 exports.deletePageContent = async (req,res) => {
   try{
-    const deletePageContent = await Media.findByIdAndDelete({_id: req.params.id})
+    const deletePageContent = await PageContent.findByIdAndDelete({_id: req.params.id})
     if(!deletePageContent){
       return res.status(400).send("Page Content hasn't found")
     }
