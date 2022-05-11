@@ -112,7 +112,7 @@ exports.saveBanners = async (req,res) => {
         await program.save()
       } 
     });
-    res.status(200).send("Banners orders had been updated")
+    res.status(200).send("Banners orders have been updated")
   } catch(error) {
     res.status(500).send(error.message)
   }  

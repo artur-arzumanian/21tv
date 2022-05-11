@@ -16,6 +16,7 @@ const {addFooter,getFooter,getFooterById,editFooter,deleteFooter} = require('../
 const {addBanner,getBanners,getBannerById,editBanner,deleteBanner} = require('../controller/homepage/program-show_banners')
 const {addPageContent,getPageContent,editPageContent,deletePageContent} = require('../controller/page-content');
 const { addFace, getFaces,getFaceById,editFace,deleteFace } = require('../controller/faces');
+const {addContact,getContact,editContact,deleteContact,sendEmailTo21TV} = require('../controller/contact_us') 
 
 // admin route
 route.post('/admin/login', login)
@@ -107,5 +108,13 @@ route.get('/get-faces', getFaces)
 route.get('/get-face/:id', getFaceById)
 route.put('/edit-face/:id', editFace)
 route.delete('/delete-face/:id', deleteFace)
+
+//contact us routes
+route.post('/add-contact', addContact)
+route.get('/get-contact', getContact)
+route.put('/edit-contact/:id', editContact)
+route.delete('/delete-contact/:id', deleteContact)
+route.post('/send-email-21tv', sendEmailTo21TV)
+
 
 module.exports = route

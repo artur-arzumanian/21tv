@@ -1,4 +1,4 @@
-const PageContent = require('../model/page-content')
+const PageContent = require('../model/page_content')
 
 exports.addPageContent = async (req,res) => {
 

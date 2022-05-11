@@ -26,7 +26,7 @@ exports.getFaces = async (req,res) => {
 
 exports.getFaceById = async (req,res) => {
   try{
-    const face = await Faces.findByid(req.params.id)  
+    const face = await Faces.findById(req.params.id)  
     res.status(200).send(face)   
   }catch(error){
     res.status(500).send(error.message)
