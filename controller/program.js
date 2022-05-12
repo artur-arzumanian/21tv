@@ -65,10 +65,10 @@ exports.getProgramByTypeId = async (req,res)=>{
 
 exports.editProgram = async (req,res)=>{
   const id = req.params.id
+  let {description,image,program_type_id,name} = req.body
   if(Object.keys(req.body).length === 0){
     return res.status(400).send({message: "Content can not be empty"})
   }
-  let {description,image,program_type_id} = req.body
   let program_type = await ProgramType.findOne({_id: program_type_id})
   if(program_type){
     program_type_id = program_type._id
@@ -76,6 +76,7 @@ exports.editProgram = async (req,res)=>{
  
   try{
     const updatedProgram = await Program.findByIdAndUpdate({_id: id}, {
+      name,
       description,
       image,
       program_type_id

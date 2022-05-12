@@ -7,13 +7,15 @@ const sliderSchema = mongoose.Schema({
   },
 
   title: {
-    type: String,
-    required: true,
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   description: {
-    type: String,
-    required: true,
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   link: {

@@ -65,7 +65,6 @@ exports.sendEmailTo21TV = async (req,res) => {
 
   try{
     await mailTransporter.sendMail({
-      from: email,
       to: "21tv.development@gmail.com",
       subject: "Contact us",
       text:" description",
@@ -73,6 +72,7 @@ exports.sendEmailTo21TV = async (req,res) => {
             <ul>
               <li>  Name: ${firstName}   </li>
               <li>  Surname: ${lastName} </li>
+              <li>  Email: ${email} </li>
               <li>  Phone: ${phone}   </li>
             </ul> <br><br>
             <h3>Message</h3> 

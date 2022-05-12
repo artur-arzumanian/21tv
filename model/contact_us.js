@@ -3,13 +3,15 @@ const validator = require('validator')
 
 const contactUsSchema = mongoose.Schema({
   title: {
-    type: String,
-    required: true
+    am: {type: String, trim: true},
+    ru: {type: String, trim: true},
+    en: {type: String, trim: true},
   },
 
   description: {
-    type: String,
-    required: true
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String}
   },
 
   email:{
@@ -31,10 +33,10 @@ const contactUsSchema = mongoose.Schema({
   },
 
   address: {
-    type: String,
-    required: true
-  }
-
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String}
+  },
 })
 
 const Contact = mongoose.model("contact_us",contactUsSchema)

@@ -5,29 +5,35 @@ const facesSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  firstName: {
-    type: String,
-    require: true
-  },
 
- lastName: {
-    type: String,
-    require: true
+  firstName: {
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
+  },
+  
+  lastName: {
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   role: {
-    type: String,
-    require: true
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   description: {
-    type: String,
-    require: true
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   shortDescription: {
-    type: String,
-    require: true
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   facebookLink: {

@@ -1,9 +1,14 @@
 const Footer = require('../../model/homepage/footer')
 
 exports.addFooter = async (req,res) => {
-  const footer = new Footer(req.body)
+  const title = req.body.title
+  console.log(title, Object.keys(title).length);
+  if(!title || title === {} || Object.keys(title).length === 0){
+    return res.status(400).send("Title is required")  
+  } 
 
   try{
+    const footer = new Footer({title: title})
     await footer.save();
     res.status(201).send(footer)
   }catch(error){
@@ -31,8 +36,9 @@ exports.getFooterById = async (req,res) => {
 
 exports.editFooter = async (req,res) => {
   const id = req.params.id
+  const title = req.body
   try{
-    const footer = await Footer.findByIdAndUpdate({_id: id}, {title: req.body.title})
+    const footer = await Footer.findByIdAndUpdate({_id: id}, title, {new: true})
     await footer.save()
     res.status(200).send(footer)
   }catch(error){
@@ -42,9 +48,8 @@ exports.editFooter = async (req,res) => {
 }
 
 exports.deleteFooter = async (req,res) => {
-  const id = req.params.id
   try{
-    const deletefooter = await Footer.findByIdAndDelete({_id: id})
+    const deletefooter = await Footer.findByIdAndDelete(req.params.id)
     if(!deletefooter){
       return res.status(400).send("Footer hasn't found")
     }

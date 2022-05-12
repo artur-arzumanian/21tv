@@ -1,15 +1,17 @@
 const mongoose = require('mongoose')
 
 const programSchema = new mongoose.Schema({
+ 
   name: {
-    type: String,
-    required:true,
-    unique: true
+    am: {type: String, unique: true, required: true},
+    ru: {type: String, unique: true, required: true},
+    en: {type: String, unique: true, required: true},
   },
 
   description: {
-    type: String,
-    required: true
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   image: {

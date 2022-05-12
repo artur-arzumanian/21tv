@@ -17,9 +17,11 @@ const historySchema = mongoose.Schema({
     required: true
   },
 
+ 
   title: {
-    type: String,
-    required: true,
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
   },
 
   duration: {
@@ -30,7 +32,6 @@ const historySchema = mongoose.Schema({
   image: {
     type: String,
     required: true
-
   }
 },{timestamps: true})
 

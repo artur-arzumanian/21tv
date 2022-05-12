@@ -2,9 +2,11 @@ const Media = require('../../model/homepage/social_media')
 
 exports.addSocialMediaLink = async (req,res) => {
   const socialLink = new Media(req.body)
+  console.log(socialLink);
   if(!socialLink){
     res.status(400).send(error.message)
   }
+  
   try{
     await socialLink.save();
     res.status(201).send(socialLink)

@@ -5,12 +5,12 @@ const pageContentSchema = mongoose.Schema({
     type: String,
     require: true
   },
-
+ 
   title: {
-    type: String,
-    require: true,
-    unique: true
-  }
+    am: {type: String, unique: true, required: true },
+    ru: {type: String, unique: true, required: true },
+    en: {type: String, unique: true, required: true },
+  },
 })
 
 const PageContent = mongoose.model('page-content', pageContentSchema)

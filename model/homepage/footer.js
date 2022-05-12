@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 
 const footerSchema = mongoose.Schema({
   title: {
-    type: String,
-    required: true
-  }
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String},
+  },
 })
 
 const Footer = mongoose.model('footer', footerSchema)

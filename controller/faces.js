@@ -38,7 +38,7 @@ exports.editFace = async (req,res) => {
     return res.status(500).send(error.message)
   }
   try{
-    const editedFace = await Faces.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true})
+    const editedFace = await Faces.findByIdAndUpdate(req.params.id, req.body, {new: true})
     if(!editedFace){
       return res.status(400).send({error: `Face  with id ${id} does not exist`})
     }
@@ -51,7 +51,7 @@ exports.editFace = async (req,res) => {
 
 exports.deleteFace = async (req,res) => {
   try{
-    const deleteFace = await Faces.findByIdAndDelete({_id: req.params.id})
+    const deleteFace = await Faces.findByIdAndDelete(req.params.id)
     if(!deleteFace){
       return res.status(400).send("Face hasn't found")
     }

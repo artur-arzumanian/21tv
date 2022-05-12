@@ -24,7 +24,7 @@ exports.getSliders = async (req,res) =>{
 exports.getSliderById = async (req,res) =>{
   
   try{
-    const slider = await Slider.find({_id: req.params.id})  
+    const slider = await Slider.findById(req.params.id)  
     res.status(200).send(slider)   
   }catch(error){
     res.status(500).send(error.message)
@@ -36,21 +36,13 @@ exports.editSlider = async (req,res) => {
   if(!id || id === null){
     return res.status(400).send({error: "Id is required"})
   }
-  const {image, title,link,description,serialID} = req.body
-
-  const editedSlider = {
-    image, 
-    title,
-    link,
-    description,
-    serialID
-  }
-  const updatedSlider = await Slider.findByIdAndUpdate({_id: id},{editedSlider},{new: true})
+  
+  const updatedSlider = await Slider.findByIdAndUpdate(id, req.body, {new: true})
   if(!updatedSlider){
-    return res.status(400).send(error.message)
+    return res.status(400).send(error)
   }
   try{
-    
+ 
     await  updatedSlider.save()
     res.status(200).send(updatedSlider)
   }catch(error){
@@ -61,7 +53,7 @@ exports.editSlider = async (req,res) => {
 exports.deleteSlider = async (req,res) => {
   const _id = req.params.id
   try{
-    const deleteSlider = await Slider.findByIdAndDelete({_id: _id})
+    const deleteSlider = await Slider.findByIdAndDelete(_id)
     if(!deleteSlider){
       return res.status(400).send({error: `Slide not found`})
     }
