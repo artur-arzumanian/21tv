@@ -8,6 +8,12 @@ const scheduleSchema = mongoose.Schema({
     ref: 'program'
   },
 
+  name: {
+    am: {type: String, required: true},
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
+  },
+
   startTime: {
     type: Number
   },
