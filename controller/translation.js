@@ -18,3 +18,21 @@ exports.translation = async (req, res) =>{
     res.status(500).send(error);
   }
 }
+
+exports.getTranslation = async (req,res) => {
+  try{
+    const translation = await Translate.find()
+    res.status(200).send(translation)
+  }catch(error){
+    res.status(500).send(error.message)
+  }
+}
+
+exports.deleteTranslation = async (req,res) => {
+  try{
+    const deletedTranslation = await Translate.findByIdAndDelete(req.params.id)
+    res.status(200).send(deletedTranslation)
+  }catch(error){
+    res.status(500).send(error.message)
+  }
+}

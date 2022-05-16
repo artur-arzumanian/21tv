@@ -2,7 +2,7 @@ const express = require('express')
 const route = new express.Router()
 const upload = require('../middleware/uploadMiddleware');
 const auth = require('../middleware/auth')
-const {translation} = require('../controller/translation')
+const {translation,getTranslation,deleteTranslation} = require('../controller/translation')
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
 const {addProgram, getPrograms, getProgramById,getProgramByTypeId, editProgram, deleteProgram, saveBanners} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
@@ -31,6 +31,8 @@ route.get('/get-image/:key',auth, getFile)
 
 //translation
 route.post('/translation',auth, translation)
+route.get('/get-translation', getTranslation)
+route.delete('/delete-translation/:id',deleteTranslation)
 
 //program-types route
 route.post('/add-program-type',auth, addProgramType)

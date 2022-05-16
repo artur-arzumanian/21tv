@@ -7,9 +7,9 @@ const facesSchema = mongoose.Schema({
   },
 
   firstName: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true},
   },
   
   lastName: {
@@ -19,21 +19,21 @@ const facesSchema = mongoose.Schema({
   },
 
   role: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true}
   },
 
   description: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true}
   },
 
   shortDescription: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true}
   },
 
   facebookLink: {

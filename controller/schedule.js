@@ -97,7 +97,7 @@ exports.updateSchedule = async (req,res) => {
     freqType
   }
   try{
-    const updatedSchedule = await Schedule.findByIdAndUpdate({_id: schedule_id}, editedSchedule, { new: true })
+    const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })
     await updatedSchedule.save()
     res.status(200).send(updatedSchedule)
   }catch(error){
@@ -110,7 +110,7 @@ exports.updateSchedule = async (req,res) => {
 exports.deleteSchedule = async (req,res) => {
   const _id = req.params.id
   try{
-    const deletedSchedule = await Schedule.findByIdAndDelete({_id: _id})
+    const deletedSchedule = await Schedule.findByIdAndDelete(_id)
     if(!deletedSchedule){
       return res.status(400).send({error: `Schedule not found`})
     }

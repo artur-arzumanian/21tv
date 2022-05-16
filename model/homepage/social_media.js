@@ -3,15 +3,15 @@ const mongoose = require('mongoose')
 const socialMediaSchema = mongoose.Schema({
   
   title: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true},
   },
 
   description: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true},
   },
 
   facebookLink: {

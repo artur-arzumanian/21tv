@@ -9,9 +9,9 @@ const programSchema = new mongoose.Schema({
   },
 
   description: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true},
   },
 
   image: {

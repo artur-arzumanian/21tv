@@ -3,15 +3,15 @@ const validator = require('validator')
 
 const contactUsSchema = mongoose.Schema({
   title: {
-    am: {type: String, trim: true},
-    ru: {type: String, trim: true},
-    en: {type: String, trim: true},
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true},
   },
 
   description: {
-    am: {type: String},
-    ru: {type: String},
-    en: {type: String}
+    am: {type: String, required: true},
+    ru: {type: String, required: true},
+    en: {type: String, required: true}
   },
 
   email:{

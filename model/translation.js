@@ -6,18 +6,9 @@ const translationSchema = new mongoose.Schema({
     unique: true,
   },
   values: {
-      en: {
-        type: String,
-        required: true,
-      },
-      ru: {
-        type: String,
-        required: true,
-      },
-      am: {
-        type: String,
-        required: true,
-      }, 
+    en: {type: String, required: true },
+    ru: {type: String, required: true },
+    am: {type: String, required: true }, 
   } 
  
 })
