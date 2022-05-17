@@ -8,10 +8,15 @@ const scheduleSchema = mongoose.Schema({
     ref: 'program'
   },
 
-  name: {
+  title: {
     am: {type: String, required: true},
     en: {type: String, required: true},
     ru: {type: String, required: true},
+  },
+
+  id: {
+    type: Number,
+    required: true
   },
 
   startTime: {
