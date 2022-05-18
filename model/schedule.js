@@ -47,8 +47,7 @@ const scheduleSchema = mongoose.Schema({
   },
 
   rRule: {
-    type: String,
-    required: true
+    type: String
   },
 
   dates: {

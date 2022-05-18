@@ -1,20 +1,24 @@
 const Schedule = require('../model/schedule')
 const { rrulestr }  = require('rrule')
-const {getDate, getMilliseconds,existingDateTime} = require('../utils/date')
+const {getDateFrom, getMilliseconds,existingDateTime} = require('../utils/date')
 
 exports.addSchedule = async (req,res)=> {
   const {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body  
   const startTime = getMilliseconds(startDate)
   const endTime = getMilliseconds(endDate)
-  const rruleDates = rrulestr(rRule).all()
-  const freqType = rrulestr(rRule).options.freq
   const dates = []
+  let freqType
+
+  if(!rRule){
+    dates.push(getDateFrom(new Date(startDate)))
+  }else{
+    const rruleDates = rrulestr(rRule).all()
+    freqType = rrulestr(rRule).options.freq
+    for(let i = 0; i < rruleDates.length; i++){
+      dates.push(getDateFrom(new Date(rruleDates[i])))
+    }
+  } 
   
-  for(let i = 0; i < rruleDates.length; i++){
-    const date = new Date(rruleDates[i])
-    dates.push(getDate(date))
-  }
- 
   const existDateTime = await existingDateTime(startTime,endTime,dates)
   if(existDateTime){
     return res.status(400).send(existDateTime)
@@ -70,21 +74,31 @@ exports.getScheduleById = async (req,res) => {
 exports.updateSchedule = async (req,res) => {
   const schedule_id = req.params.id
   let {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body
-  const startTime = getMilliseconds(startDate)
-  const endTime = getMilliseconds(endDate)
-  const rruleDates = rrulestr(rRule).all()
-  const freqType = rrulestr(rRule).options.freq
-  const dates = []
-  
-  for(let i = 0; i < rruleDates.length; i++){
-    const date = new Date(rruleDates[i])
-    dates.push(getDate(date))
-  }
- 
-  const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id)
-  if(existDateTime){
-    return res.status(400).send(existDateTime)
-  }
+  let startTime
+  let endTime
+  let dates
+  let freqType
+  if(startDate && endDate){
+    startTime = getMilliseconds(startDate)
+    endTime = getMilliseconds(endDate)
+
+    if(!rRule){
+      dates = []
+      dates.push(getDateFrom(new Date(startDate)))
+    }else{
+      dates = []
+      const rruleDates = rrulestr(rRule).all()
+      freqType = rrulestr(rRule).options.freq
+      for(let i = 0; i < rruleDates.length; i++){
+        dates.push(getDateFrom(new Date(rruleDates[i])))
+      }
+    } 
+   
+    const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id)
+    if(existDateTime){
+      return res.status(400).send(existDateTime)
+    }
+  }  
 
   const editedSchedule = {
     programId,
@@ -95,10 +109,10 @@ exports.updateSchedule = async (req,res) => {
     rRule,
     appointmentId,
     image,
-    startTime,
-    endTime,
     dates,
-    freqType
+    freqType,
+    startTime,
+    endTime
   }
   try{
     const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })

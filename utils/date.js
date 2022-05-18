@@ -1,5 +1,5 @@
 const Schedule = require('../model/schedule')
-const getDate = (date) => {
+const getDateFrom = (date) => {
   return ('0' + date.getDate()).slice(-2) + '-'
          + ('0' + (date.getMonth()+1)).slice(-2) + '-'
          + date.getFullYear();
@@ -12,7 +12,7 @@ const getMilliseconds = (date) => {
 }
 
 const existingDateTime = async (startTime, endTime, dates, scheduleId = null) => {
-  let condition = {$or: [{$and: [{startTime: {$lte: startTime}},{endTime: {$gte: startTime}}]},{$and:[{startTime: {$lte: endTime}},{endTime: {$gte: endTime}}]},{$and: [{startTime: {$gte: startTime}},{startTime: {$lte: endTime}}]}]};
+  let condition = {$or: [{$and: [{startTime: {$lte: startTime}},{endTime: {$gt: startTime}}]},{$and:[{startTime: {$lt: endTime}},{endTime: {$gte: endTime}}]},{$and: [{startTime: {$gte: startTime}},{startTime: {$lt: endTime}}]}]};
 
   if (scheduleId) {
     condition = {$and :[
@@ -40,4 +40,4 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null) =>
   }  
 }
 
-module.exports = {getDate, getMilliseconds, existingDateTime}
+module.exports = {getDateFrom, getMilliseconds, existingDateTime}
