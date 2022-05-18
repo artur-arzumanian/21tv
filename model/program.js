@@ -25,6 +25,10 @@ const programSchema = new mongoose.Schema({
     required: true
   },
 
+  link: {
+    type: String
+  },
+
   program_type_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'program_type',

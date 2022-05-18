@@ -19,7 +19,8 @@ exports.addProgram = async (req,res) => {
     description: req.body.description,
     image: req.body.image,
     banners_order: req.body.banners_order,
-    program_type_id: program_type._id
+    program_type_id: program_type._id,
+    link: req.body.link
   })
 
   try{
@@ -65,7 +66,7 @@ exports.getProgramByTypeId = async (req,res)=>{
 
 exports.editProgram = async (req,res)=>{
   const id = req.params.id
-  let {description,image,program_type_id,name} = req.body
+  let {description,image,program_type_id,name,link} = req.body
   if(Object.keys(req.body).length === 0){
     return res.status(400).send({message: "Content can not be empty"})
   }
@@ -79,7 +80,8 @@ exports.editProgram = async (req,res)=>{
       name,
       description,
       image,
-      program_type_id
+      program_type_id,
+      link
     },{ new: true })
     if(!updatedProgram){
       return res.status(400).send({error: `Program with id ${id} does not exist`})
