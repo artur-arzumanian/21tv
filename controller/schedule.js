@@ -73,7 +73,7 @@ exports.getScheduleById = async (req,res) => {
 
 exports.updateSchedule = async (req,res) => {
   const schedule_id = req.params.id
-  let {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body
+  let {startDate,endDate,rRule, appointmentId,image,programId,name,id,exDate} = req.body
   let startTime
   let endTime
   let dates
@@ -112,7 +112,8 @@ exports.updateSchedule = async (req,res) => {
     dates,
     freqType,
     startTime,
-    endTime
+    endTime,
+    exDate
   }
   try{
     const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })

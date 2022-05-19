@@ -36,6 +36,10 @@ const scheduleSchema = mongoose.Schema({
     required: true
   },
 
+  exDate: {
+    type: Date
+  },
+
   appointmentId: {
     type: Number,
     required: true
