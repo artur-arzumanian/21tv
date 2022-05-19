@@ -13,7 +13,8 @@ exports.addProgramHistory = async (req, res) => {
     link: req.body.link,
     title: req.body.title,
     duration: req.body.duration,
-    image: req.body.image
+    image: req.body.image,
+    date: req.body.date
   })
 
   try{
@@ -53,7 +54,7 @@ exports.getProgramHistoryById = async (req,res)=>{
 
 
 exports.editProgramHistory = async (req, res) => {
-  let {programId,title,episode,link,image,duration} = req.body
+  let {programId,title,episode,link,image,duration,date} = req.body
   if(programId){
     let program = await Program.findOne({_id: programId})
     if(program){
@@ -68,7 +69,8 @@ exports.editProgramHistory = async (req, res) => {
       episode,
       link,
       image,
-      duration
+      duration,
+      date
     },{new: true})
 
     await editedHistory.save()
@@ -76,7 +78,6 @@ exports.editProgramHistory = async (req, res) => {
   }catch(error){
     res.status(500).send(error)
   }
-
  
 }
 

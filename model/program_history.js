@@ -29,6 +29,11 @@ const historySchema = mongoose.Schema({
     required: true
   },
 
+  date: {
+    type: String,
+    required: true  
+  },
+
   image: {
     type: String,
     required: true
