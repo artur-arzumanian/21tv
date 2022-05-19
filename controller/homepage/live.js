@@ -30,6 +30,18 @@ exports.getLiveLinkById = async (req,res) => {
   }
 }
 
+exports.editLiveLink = async (req,res) => {
+  
+  try{
+    const live = await Live.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    await live.save()
+    res.status(200).send(live)
+  }catch(error){
+    res.status(500).send(error.message)
+  }
+}
+
+
 exports.deleteLiveLink = async (req,res) => {
   const _id = req.params.id
   try{

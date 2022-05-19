@@ -77,7 +77,8 @@ exports.updateSchedule = async (req,res) => {
   let startTime
   let endTime
   let dates
-  let freqType
+  let freqType  
+
   if(startDate && endDate){
     startTime = getMilliseconds(startDate)
     endTime = getMilliseconds(endDate)
@@ -98,8 +99,7 @@ exports.updateSchedule = async (req,res) => {
     if(existDateTime){
       return res.status(400).send(existDateTime)
     }
-  }  
-
+  }
   const editedSchedule = {
     programId,
     name,

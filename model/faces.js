@@ -25,15 +25,9 @@ const facesSchema = mongoose.Schema({
   },
 
   description: {
-    am: {type: String, required: true},
-    ru: {type: String, required: true},
-    en: {type: String, required: true}
-  },
-
-  shortDescription: {
-    am: {type: String, required: true},
-    ru: {type: String, required: true},
-    en: {type: String, required: true}
+    am: {type: String},
+    ru: {type: String},
+    en: {type: String}
   },
 
   facebookLink: {

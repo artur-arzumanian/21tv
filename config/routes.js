@@ -10,7 +10,7 @@ const {login,logout,changePassword,forgotPassword,resetPassword} = require('../c
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
 const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory} = require('../controller/program_history')
 const {addSlider,getSliders,getSliderById,editSlider,deleteSlider, saveSlider} = require('../controller/homepage/slider')
-const {addLiveLink,getLiveLink,getLiveLinkById,deleteLiveLink} = require('../controller/homepage/live')
+const {addLiveLink,getLiveLink,getLiveLinkById,editLiveLink,deleteLiveLink} = require('../controller/homepage/live')
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
 const {addFooter,getFooter,getFooterById,editFooter,deleteFooter} = require('../controller/homepage/footer')
 const {addBanner,getBanners,getBannerById,editBanner,deleteBanner} = require('../controller/homepage/program-show_banners')
@@ -75,6 +75,7 @@ route.delete('/delete-slider/:id', deleteSlider)
 route.post('/add-livelink', addLiveLink)
 route.get('/get-livelink', getLiveLink)
 route.get('/get-livelink/:id', getLiveLinkById)
+route.put('/edit-live-link/:id', editLiveLink)
 route.delete('/delete-livelink/:id', deleteLiveLink)
 
 //homepage Banners routes
