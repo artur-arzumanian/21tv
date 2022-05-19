@@ -37,7 +37,7 @@ const scheduleSchema = mongoose.Schema({
   },
 
   exDate: {
-    type: Date
+    type: String
   },
 
   appointmentId: {

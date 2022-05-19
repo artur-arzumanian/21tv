@@ -1,6 +1,7 @@
 const Schedule = require('../model/schedule')
 const { rrulestr }  = require('rrule')
 const {getDateFrom, getMilliseconds,existingDateTime} = require('../utils/date')
+const moment = require('moment')
 
 exports.addSchedule = async (req,res)=> {
   const {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body  
@@ -77,8 +78,8 @@ exports.updateSchedule = async (req,res) => {
   let startTime
   let endTime
   let dates
-  let freqType  
-
+  let freqType 
+ 
   if(startDate && endDate){
     startTime = getMilliseconds(startDate)
     endTime = getMilliseconds(endDate)
