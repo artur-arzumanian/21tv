@@ -8,7 +8,7 @@ const {addProgram, getPrograms, getProgramById,getProgramByTypeId, editProgram, 
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
-const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory} = require('../controller/program_history')
+const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory,getProgramHistoryByProgramId,search} = require('../controller/program_history')
 const {addSlider,getSliders,getSliderById,editSlider,deleteSlider, saveSlider} = require('../controller/homepage/slider')
 const {addLiveLink,getLiveLink,getLiveLinkById,editLiveLink,deleteLiveLink} = require('../controller/homepage/live')
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
@@ -60,6 +60,7 @@ route.delete('/delete-schedule/:id', auth, deleteSchedule)
 route.post('/add-program-history',auth, addProgramHistory)
 route.get('/get-program-histories', getProgramHistories)
 route.get('/get-program-history/:id', getProgramHistoryById)
+route.get('/get-program-history-by-program-id/:programId', getProgramHistoryByProgramId)
 route.put('/edit-program-history/:id', auth,editProgramHistory)
 route.delete('/delete-program-history/:id', auth, deleteProgramHistory)
 
@@ -118,6 +119,9 @@ route.get('/get-contact', getContact)
 route.put('/edit-contact/:id', editContact)
 route.delete('/delete-contact/:id', deleteContact)
 route.post('/send-email-21tv', sendEmailTo21TV)
+
+//search routes
+route.get('/search/:key', search)
 
 
 module.exports = route

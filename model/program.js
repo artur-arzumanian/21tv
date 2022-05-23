@@ -34,7 +34,7 @@ const programSchema = new mongoose.Schema({
     ref: 'program_type',
     required: true
   }
-})
+},{timestamps: true})
 
 const Program = mongoose.model('program', programSchema)
 module.exports = Program

@@ -94,3 +94,43 @@ exports.deleteProgramHistory = async (req,res) => {
   }
 
 }
+
+exports.search = async (req,res) =>{
+  try{
+    const search = await ProgramHistory.find(
+      {
+        "$or": [
+          {"title.am": {$regex: req.params.key, $options: 'i'}},
+          {"title.ru": {$regex: req.params.key, $options: 'i'}},
+          {"title.en": {$regex: req.params.key, $options: 'i'}}  
+        ]
+      })
+      console.log(search);
+      console.log(req.params.key);
+    res.status(200).send(search)
+  }catch{
+    res.status(500).send(error.message)
+  }
+}
+
+exports.getProgramHistoryByProgramId = async (req,res)=>{
+
+  try{
+    let {page, size} = req.query
+    if(!page){
+      page = 1
+    };
+    if(!size){
+      size = 10
+    };
+    const limit  = parseInt(size)
+    const skip = (page -1) * size
+    const programHistories = await ProgramHistory.find({programId: req.params.programId}).limit(limit).skip(skip)
+    if(!programHistories){
+      return res.status(404).send({error: `Programs histories are empty`})
+    }
+    res.status(200).send({page, size, programHistories})
+  }catch(error){
+    res.status(500).send(error)
+  }
+}
