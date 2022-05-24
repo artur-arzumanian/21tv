@@ -23,18 +23,22 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null) =>
     ]};
   }
   const getSchedule = await Schedule.find(condition, {"dates":1})
-  let allDates = getSchedule.reduce(function(aggr, val) {
-    return aggr = [...val.dates];
-  }, [])
+  let allDates = [];
+  getSchedule.forEach(function(val) {
+    val.dates.forEach(function(item){
+      allDates = [...allDates, item]
+    })
+    
+  })
+
   allDates = [...new Set(allDates)]
-  
   let existingDates = [];
   for(let i = 0; i <  dates.length; i++){
     if (allDates.indexOf(dates[i]) !== -1){
       existingDates.push(dates[i]);      
     }
   }
-
+  
   if (existingDates.length > 0) {
     return ({error: "Conflict with time for dates: " + existingDates.join()})
   }  
