@@ -102,11 +102,9 @@ exports.search = async (req,res) =>{
         "$or": [
           {"title.am": {$regex: req.params.key, $options: 'i'}},
           {"title.ru": {$regex: req.params.key, $options: 'i'}},
-          {"title.en": {$regex: req.params.key, $options: 'i'}}  
+          {"title.en": {$regex: req.params.key, $options: 'i'}}
         ]
       })
-      console.log(search);
-      console.log(req.params.key);
     res.status(200).send(search)
   }catch{
     res.status(500).send(error.message)

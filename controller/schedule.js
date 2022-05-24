@@ -94,9 +94,9 @@ exports.updateSchedule = async (req,res) => {
         for(let i = 0; i < rruleDates.length; i++){
           dates.push(getDateFrom(new Date(rruleDates[i])))
         }
-      } 
-    
-      const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id)
+      }
+
+      const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id,exDate)
       if(existDateTime){
         return res.status(400).send(existDateTime)
       }else{

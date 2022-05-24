@@ -1,4 +1,6 @@
+const moment = require('moment')
 const Schedule = require('../model/schedule')
+
 const getDateFrom = (date) => {
   return ('0' + date.getDate()).slice(-2) + '-'
          + ('0' + (date.getMonth()+1)).slice(-2) + '-'
@@ -11,10 +13,10 @@ const getMilliseconds = (date) => {
   return day - dayStart
 }
 
-const existingDateTime = async (startTime, endTime, dates, scheduleId = null) => {
+const existingDateTime = async (startTime, endTime, dates, scheduleId = null, exDate = null) => {
   let condition = {$or: [{$and: [{startTime: {$lte: startTime}},{endTime: {$gt: startTime}}]},{$and:[{startTime: {$lt: endTime}},{endTime: {$gte: endTime}}]},{$and: [{startTime: {$gte: startTime}},{startTime: {$lt: endTime}}]}]};
 
-  if (scheduleId) {
+  if(scheduleId) {
     condition = {$and :[
       {
         _id: {$ne: scheduleId}
@@ -32,6 +34,16 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null) =>
   })
 
   allDates = [...new Set(allDates)]
+  
+  if(exDate){
+    exDate.split(',').forEach(elm => {
+      let index = allDates.indexOf(getDateFrom(new Date(moment(elm))))
+      if(index !== -1){
+        allDates.splice(index,1)
+      }
+    })
+  }
+  
   let existingDates = [];
   for(let i = 0; i <  dates.length; i++){
     if (allDates.indexOf(dates[i]) !== -1){
