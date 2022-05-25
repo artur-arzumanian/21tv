@@ -106,14 +106,13 @@ exports.updateSchedule = async (req,res) => {
     let dateFrom = await Schedule.findById(schedule_id);
     dates = dateFrom.dates
     exDate.split(',').forEach(elm => {
-      let index = dates.indexOf(getDateFrom(new Date(moment(elm))))
+      let index = dates.indexOf(getDateFrom(new Date(new Date(moment(elm)).getTime() + 14400000)))
       if(index !== -1){
         dates.splice(index,1)
       }
     })
    
   }
-
   try{
     const editedSchedule = {
       programId,

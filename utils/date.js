@@ -13,7 +13,7 @@ const getMilliseconds = (date) => {
   return day - dayStart
 }
 
-const existingDateTime = async (startTime, endTime, dates, scheduleId = null, exDate = null) => {
+const existingDateTime = async (startTime, endTime, dates, scheduleId = null) => {
   let condition = {$or: [{$and: [{startTime: {$lte: startTime}},{endTime: {$gt: startTime}}]},{$and:[{startTime: {$lt: endTime}},{endTime: {$gte: endTime}}]},{$and: [{startTime: {$gte: startTime}},{startTime: {$lt: endTime}}]}]};
 
   if(scheduleId) {
@@ -23,30 +23,17 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null, ex
       },
       condition
     ]};
-  }
-
-  
+  }  
 
   const getSchedule = await Schedule.find(condition, {"dates":1})
-  console.log(getSchedule);
   let allDates = [];
   getSchedule.forEach(function(val) {
     val.dates.forEach(function(item){
       allDates = [...allDates, item]
-    })
-    
+    }) 
   })
 
   allDates = [...new Set(allDates)]
-  
-  if(exDate){
-    exDate.split(',').forEach(elm => {
-      let index = allDates.indexOf(getDateFrom(new Date(moment(elm))))
-      if(index !== -1){
-        allDates.splice(index,1)
-      }
-    })
-  }
   
   let existingDates = [];
   for(let i = 0; i <  dates.length; i++){
