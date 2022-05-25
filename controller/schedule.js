@@ -79,68 +79,60 @@ exports.updateSchedule = async (req,res) => {
   let endTime
   let dates
   let freqType 
-  try{
-    if(startDate && endDate){
-      startTime = getMilliseconds(startDate)
-      endTime = getMilliseconds(endDate)
+  
+  if(startDate && endDate){
+    startTime = getMilliseconds(startDate)
+    endTime = getMilliseconds(endDate)
 
-      if(!rRule){
-        dates = []
-        dates.push(getDateFrom(new Date(startDate)))
-      }else{
-        dates = []
-        const rruleDates = rrulestr(rRule).all()
-        freqType = rrulestr(rRule).options.freq
-        for(let i = 0; i < rruleDates.length; i++){
-          dates.push(getDateFrom(new Date(rruleDates[i])))
-        }
-      }
-
-      const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id,exDate)
-      if(existDateTime){
-        return res.status(400).send(existDateTime)
-      }else{
-        const editedSchedule = {
-          programId,
-          name,
-          id,
-          startDate,
-          endDate,
-          rRule,
-          appointmentId,
-          image,
-          dates,
-          freqType,
-          startTime,
-          endTime,
-          exDate
-        }
-      
-        const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })
-        await updatedSchedule.save()
-        res.status(200).send(updatedSchedule)
-      }
+    if(!rRule){
+      dates = []
+      dates.push(getDateFrom(new Date(startDate)))
     }else{
-      const editedSchedule = {
-        programId,
-        name,
-        id,
-        startDate,
-        endDate,
-        rRule,
-        appointmentId,
-        image,
-        dates,
-        freqType,
-        startTime,
-        endTime,
-        exDate
+      dates = []
+      const rruleDates = rrulestr(rRule).all()
+      freqType = rrulestr(rRule).options.freq
+      for(let i = 0; i < rruleDates.length; i++){
+        dates.push(getDateFrom(new Date(rruleDates[i])))
       }
-    
-      const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })
-      await updatedSchedule.save()
-      res.status(200).send(updatedSchedule)
     }
+
+    const existDateTime = await existingDateTime(startTime,endTime,dates,schedule_id,exDate)
+    if(existDateTime){
+      return res.status(400).send(existDateTime)
+    }
+  }
+
+  if(exDate){
+    let dateFrom = await Schedule.findById(schedule_id);
+    dates = dateFrom.dates
+    exDate.split(',').forEach(elm => {
+      let index = dates.indexOf(getDateFrom(new Date(moment(elm))))
+      if(index !== -1){
+        dates.splice(index,1)
+      }
+    })
+   
+  }
+
+  try{
+    const editedSchedule = {
+      programId,
+      name,
+      id,
+      startDate,
+      endDate,
+      rRule,
+      appointmentId,
+      image,
+      dates,
+      freqType,
+      startTime,
+      endTime,
+      exDate
+    }
+    const updatedSchedule = await Schedule.findByIdAndUpdate(schedule_id, editedSchedule, { new: true })
+    await updatedSchedule.save()
+    res.status(200).send(updatedSchedule)    
   }catch(error){
     res.status(500).send(error)
   }

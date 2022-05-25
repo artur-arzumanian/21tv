@@ -24,7 +24,11 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null, ex
       condition
     ]};
   }
+
+  
+
   const getSchedule = await Schedule.find(condition, {"dates":1})
+  console.log(getSchedule);
   let allDates = [];
   getSchedule.forEach(function(val) {
     val.dates.forEach(function(item){
