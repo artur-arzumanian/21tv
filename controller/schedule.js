@@ -1,15 +1,15 @@
 const Schedule = require('../model/schedule')
 const { rrulestr }  = require('rrule')
-const {getDateFrom, getMilliseconds,existingDateTime} = require('../utils/date')
+const {getDateFrom, getMilliseconds, getDateTZ,existingDateTime} = require('../utils/date')
 const moment = require('moment')
 
 exports.addSchedule = async (req,res)=> {
-  const {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body  
+  let {startDate,endDate,rRule, appointmentId,image,programId,name,id} = req.body  
   const startTime = getMilliseconds(startDate)
   const endTime = getMilliseconds(endDate)
   const dates = []
-  let freqType
-
+  let freqType 
+  
   if(!rRule){
     dates.push(getDateFrom(new Date(startDate)))
   }else{
@@ -24,7 +24,7 @@ exports.addSchedule = async (req,res)=> {
   if(existDateTime){
     return res.status(400).send(existDateTime)
   }
-
+  
   const schedule = new Schedule({
     programId,
     name,
@@ -106,7 +106,7 @@ exports.updateSchedule = async (req,res) => {
     let dateFrom = await Schedule.findById(schedule_id);
     dates = dateFrom.dates
     exDate.split(',').forEach(elm => {
-      let index = dates.indexOf(getDateFrom(new Date(new Date(moment(elm)).getTime() + 14400000)))
+      let index = dates.indexOf(getDateFrom(getDateTZ(elm)))
       if(index !== -1){
         dates.splice(index,1)
       }
@@ -114,6 +114,7 @@ exports.updateSchedule = async (req,res) => {
    
   }
   try{
+    
     const editedSchedule = {
       programId,
       name,

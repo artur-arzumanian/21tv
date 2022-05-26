@@ -54,8 +54,8 @@ exports.sendEmailTo21TV = async (req,res) => {
 
   let mailTransporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     service: 'gmail',
     auth: {
       user: "21tv.development@gmail.com",

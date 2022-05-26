@@ -13,6 +13,10 @@ const getMilliseconds = (date) => {
   return day - dayStart
 }
 
+const getDateTZ = (date) => {
+  return new Date(new Date(date).getTime() + 14400000)
+}
+
 const existingDateTime = async (startTime, endTime, dates, scheduleId = null) => {
   let condition = {$or: [{$and: [{startTime: {$lte: startTime}},{endTime: {$gt: startTime}}]},{$and:[{startTime: {$lt: endTime}},{endTime: {$gte: endTime}}]},{$and: [{startTime: {$gte: startTime}},{startTime: {$lt: endTime}}]}]};
 
@@ -47,4 +51,4 @@ const existingDateTime = async (startTime, endTime, dates, scheduleId = null) =>
   }  
 }
 
-module.exports = {getDateFrom, getMilliseconds, existingDateTime}
+module.exports = {getDateFrom, getMilliseconds, getDateTZ, existingDateTime}

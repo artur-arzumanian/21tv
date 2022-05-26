@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const historySchema = mongoose.Schema({
   programId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Program",
+    ref: "program",
     required: true
   },
 

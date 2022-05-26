@@ -40,11 +40,6 @@ const AdminSchema = mongoose.Schema({
   isAdmin: {
     type: Boolean,
     default: false
-  }, 
-
-  token:{
-    type: String,
-    default: '' 
   }
 
 })
@@ -52,8 +47,6 @@ const AdminSchema = mongoose.Schema({
 AdminSchema.methods.generateAuthToken = async function() {
   const admin = this
   const token = jwt.sign({ _id: admin._id.toString(), email: admin.email }, process.env.JWT_PRIVATE_KEY,{expiresIn: '7d'});
-  admin.token = token
-  await admin.save()
   return token
 };
 

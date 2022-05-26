@@ -18,32 +18,14 @@ exports.login = async (req,res) => {
     return res.status(400).send('Invalid passsword')
   }
 
-  if (admin.token == ''){
-    try{
-      const token = await admin.generateAuthToken()
-      return res.status(200).send(token);   
-    
-    } catch(error) {
-      return res.status(400).send(error);
-    } 
-  } else {
-    return res.status(400).send('Admin has already been logged in ')
-  }
-}
+  try{
+    const token = await admin.generateAuthToken()
+    return res.status(200).send(token);   
+  
+  } catch(error) {
+    return res.status(400).send(error);
+  }  
 
-exports.logout =  async (req,res)=>{
-  const id = req.body.id
-  if(!id){
-    return res.status(400).send(error)
-  }
-  try {
-    await Admin.findOneAndUpdate({_id: id}, {token: ""}, {
-      new: true
-    })
-    return res.send({message: "You are logged out"})
-  } catch(e) {
-    return res.status(500).send(e)
-  } 
 }
 
 exports.changePassword = async (req,res)=>{

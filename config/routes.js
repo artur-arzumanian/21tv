@@ -6,9 +6,9 @@ const {translation,getTranslation,deleteTranslation} = require('../controller/tr
 const {addProgramType, getProgramTypes, getProgramType, deleteProgramType} = require('../controller/prograqm_type')
 const {addProgram, getPrograms, getProgramById,getProgramByTypeId, editProgram, deleteProgram, saveBanners} = require('../controller/program')
 const {uploadImage,getFile} = require('../controller/upload')
-const {login,logout,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
+const {login,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
-const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory,getProgramHistoryByProgramId,search} = require('../controller/program_history')
+const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory,getProgramHistoryByProgramId,search,deletePrHistWithoutPrId} = require('../controller/program_history')
 const {addSlider,getSliders,getSliderById,editSlider,deleteSlider, saveSlider} = require('../controller/homepage/slider')
 const {addLiveLink,getLiveLink,getLiveLinkById,editLiveLink,deleteLiveLink} = require('../controller/homepage/live')
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
@@ -20,7 +20,6 @@ const {addContact,getContact,editContact,deleteContact,sendEmailTo21TV} = requir
 
 // admin route
 route.post('/admin/login', login)
-route.post('/admin/logout', logout)
 route.put('/admin/change-password', auth, changePassword)
 route.post('/admin/forgot-password', forgotPassword)
 route.post('/admin/reset-password',resetPassword)
@@ -63,6 +62,7 @@ route.get('/get-program-history/:id', getProgramHistoryById)
 route.get('/get-program-history-by-program-id/:programId', getProgramHistoryByProgramId)
 route.put('/edit-program-history/:id', auth,editProgramHistory)
 route.delete('/delete-program-history/:id', auth, deleteProgramHistory)
+route.delete('/delet-histoy-without-prId',deletePrHistWithoutPrId)
 
 //homepage slider routes
 route.post('/add-slider', addSlider)

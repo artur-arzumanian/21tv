@@ -40,9 +40,9 @@ exports.getProgramHistories = async (req,res)=>{
 }
 
 exports.getProgramHistoryById = async (req,res)=>{
-
+ 
   try{
-    const programHistory = await ProgramHistory.find({programId: req.params.id})
+    const programHistory = await ProgramHistory.findOne({_id: req.params.id})
     if(!programHistory){
       return res.status(404).send({error: `Program histories are empty`})
     }
@@ -97,19 +97,30 @@ exports.deleteProgramHistory = async (req,res) => {
 
 exports.search = async (req,res) =>{
   try{
-    const search = await ProgramHistory.find(
+    const searchProgram = await Program.find(
       {
-        "$or": [
+        $or: [
+          {"name.am": {$regex: req.params.key, $options: 'i'}},
+          {"name.ru": {$regex: req.params.key, $options: 'i'}},
+          {"name.en": {$regex: req.params.key, $options: 'i'}}
+        ]
+      })
+      
+      const searchProgramHistory = await ProgramHistory.find(
+      {
+        $or: [
           {"title.am": {$regex: req.params.key, $options: 'i'}},
           {"title.ru": {$regex: req.params.key, $options: 'i'}},
           {"title.en": {$regex: req.params.key, $options: 'i'}}
         ]
       })
-    res.status(200).send(search)
-  }catch{
+    res.status(200).send({searchProgramHistory, searchProgram})
+  }catch(error){
     res.status(500).send(error.message)
   }
 }
+
+
 
 exports.getProgramHistoryByProgramId = async (req,res)=>{
 
@@ -131,4 +142,23 @@ exports.getProgramHistoryByProgramId = async (req,res)=>{
   }catch(error){
     res.status(500).send(error)
   }
+}
+
+
+exports.deletePrHistWithoutPrId = async (req,res) => {
+
+  try{
+    let history = await ProgramHistory.find()
+ 
+    for(let i =0; i< history.length; i++){
+      let arr = await Program.findById(history[i].programId)
+      if(!arr || arr === null || arr === undefined){
+        await ProgramHistory.findByIdAndDelete(history[i].programId) 
+      }
+    }
+    res.status(200).send("ProgramHistory have been cleand")
+  }catch(error){
+    res.status(500).send(error.message)
+  }
+ 
 }
