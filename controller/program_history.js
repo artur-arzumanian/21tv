@@ -42,7 +42,7 @@ exports.getProgramHistories = async (req,res)=>{
 exports.getProgramHistoryById = async (req,res)=>{
  
   try{
-    const programHistory = await ProgramHistory.findOne({_id: req.params.id})
+    const programHistory = await ProgramHistory.find({programId: req.params.programId})
     if(!programHistory){
       return res.status(404).send({error: `Program histories are empty`})
     }
