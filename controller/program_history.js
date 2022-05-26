@@ -156,7 +156,7 @@ exports.deletePrHistWithoutPrId = async (req,res) => {
         await ProgramHistory.findByIdAndDelete(history[i].programId) 
       }
     }
-    res.status(200).send("ProgramHistory have been cleand")
+    res.status(200).send("ProgramHistory have been cleaned")
   }catch(error){
     res.status(500).send(error.message)
   }
