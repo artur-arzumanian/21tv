@@ -62,7 +62,7 @@ exports.sendEmailTo21TV = async (req,res) => {
       user: "21tv.development@gmail.com",
       pass: "!!dar21)tv128"
     },
-    logger: true.valueOf,
+    logger: true,
     tls: {rejectUnauthorized: false}
   });
 
