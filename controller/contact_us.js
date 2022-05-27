@@ -71,15 +71,16 @@ exports.sendEmailTo21TV = async (req,res) => {
       to: "21tv.development@gmail.com",
       subject: "Contact us",
       text:" description",
-      html: `<h3>Contact Details</h3>  
-            <ul>
-              <li>  Name: ${firstName}   </li>
-              <li>  Surname: ${lastName} </li>
-              <li>  Email: ${email} </li>
-              <li>  Phone: ${phone}   </li>
-            </ul> <br><br>
-            <h3>Message</h3> 
-            <p>${text}</p>`,
+      // html: `<h3>Contact Details</h3>  
+      //       <ul>
+      //         <li>  Name: ${firstName}   </li>
+      //         <li>  Surname: ${lastName} </li>
+      //         <li>  Email: ${email} </li>
+      //         <li>  Phone: ${phone}   </li>
+      //       </ul> <br><br>
+      //       <h3>Message</h3> 
+      //       <p>${text}</p>`,
+      html : { path: '../../emailTamplate/emailTamplate' }
       
       
     })

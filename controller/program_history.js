@@ -40,9 +40,8 @@ exports.getProgramHistories = async (req,res)=>{
 }
 
 exports.getProgramHistoryById = async (req,res)=>{
- 
   try{
-    const programHistory = await ProgramHistory.find({programId: req.params.programId})
+    const programHistory = await ProgramHistory.find({programId: req.params.id})
     if(!programHistory){
       return res.status(404).send({error: `Program histories are empty`})
     }
@@ -123,7 +122,6 @@ exports.search = async (req,res) =>{
 
 
 exports.getProgramHistoryByProgramId = async (req,res)=>{
-
   try{
     let {page, size} = req.query
     if(!page){
@@ -134,7 +132,7 @@ exports.getProgramHistoryByProgramId = async (req,res)=>{
     };
     const limit  = parseInt(size)
     const skip = (page -1) * size
-    const programHistories = await ProgramHistory.find({programId: req.params.programId}).limit(limit).skip(skip)
+    const programHistories = await ProgramHistory.find({programId: req.params.id}).limit(limit).skip(skip)
     if(!programHistories){
       return res.status(404).send({error: `Programs histories are empty`})
     }
