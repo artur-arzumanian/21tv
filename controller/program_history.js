@@ -1,5 +1,6 @@
 const ProgramHistory = require('../model/program_history')
 const Program = require('../model/program')
+const cron = require("node-cron");
 
 exports.addProgramHistory = async (req, res) => {
   let program = await Program.findOne({_id: req.body.programId})
@@ -142,9 +143,7 @@ exports.getProgramHistoryByProgramId = async (req,res)=>{
   }
 }
 
-
-exports.deletePrHistWithoutPrId = async (req,res) => {
-
+cron.schedule("* * * 25 * *",async function() {
   try{
     let history = await ProgramHistory.find()
  
@@ -154,9 +153,7 @@ exports.deletePrHistWithoutPrId = async (req,res) => {
         await ProgramHistory.findByIdAndDelete(history[i].programId) 
       }
     }
-    res.status(200).send("ProgramHistory have been cleaned")
   }catch(error){
-    res.status(500).send(error.message)
+    console.log(error.message)
   }
- 
-}
+});

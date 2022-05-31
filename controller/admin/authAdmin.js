@@ -67,7 +67,7 @@ exports.forgotPassword = async (req, res) => {
     return res.status(400).send('Admin with this email doesnt exist')
   }
 
-  const token = jwt.sign({_id: admin._id},process.env.JWT_PRIVATE_KEY,{expiresIn: '15m'})
+  const token = jwt.sign({_id: admin._id, msg: process.env.JWT_MSG},process.env.JWT_PRIVATE_KEY,{expiresIn: '15m'})
 
   let mailTransporter = nodemailer.createTransport({
     service: "gmail",  
@@ -83,9 +83,9 @@ exports.forgotPassword = async (req, res) => {
       subject: "Reset password",
       text: "Password changing link",    
       html: `<h2>Please click on given link to change your password <h2>
-      <p>${process.env.BASE_URL}/reset-password/${token}<p>`
+      <p>${process.env.HEROKU_ADMIN}/reset-password/${token}<p>`
     })
-    res.send("password reset link sent to your email account");
+    res.send("Password reset link has been sent to your email");
   }catch(error){
     res.status(400).send(error)
   }
@@ -120,7 +120,7 @@ exports.resetPassword = async (req,res) => {
 
     admin.password = password
     await admin.save()
-    return res.status(200).send("password reset sucessfully.");
+    return res.status(200).send("Password has been sucessfully reseted .");
   }catch (error) {
     res.send("An error occured");
     console.log(error);

@@ -8,7 +8,7 @@ const {addProgram, getPrograms, getProgramById,getProgramByTypeId, editProgram, 
 const {uploadImage,getFile} = require('../controller/upload')
 const {login,changePassword,forgotPassword,resetPassword} = require('../controller/admin/authAdmin')
 const {addSchedule,getSchedule,getScheduleById,updateSchedule,deleteSchedule} = require('../controller/schedule')
-const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory,getProgramHistoryByProgramId,search,deletePrHistWithoutPrId} = require('../controller/program_history')
+const {addProgramHistory,getProgramHistories,getProgramHistoryById,editProgramHistory,deleteProgramHistory,getProgramHistoryByProgramId,search} = require('../controller/program_history')
 const {addSlider,getSliders,getSliderById,editSlider,deleteSlider, saveSlider} = require('../controller/homepage/slider')
 const {addLiveLink,getLiveLink,getLiveLinkById,editLiveLink,deleteLiveLink} = require('../controller/homepage/live')
 const {addSocialMediaLink,getSocialMediaLinkById,getSocialMediaLinks,editSocialMediaLink,deleteSocialMediaLink} = require('../controller/homepage/social_media')
@@ -62,62 +62,61 @@ route.get('/get-program-history/:id', getProgramHistoryById)
 route.get('/get-program-history-by-program-id/:id', getProgramHistoryByProgramId)
 route.put('/edit-program-history/:id', auth,editProgramHistory)
 route.delete('/delete-program-history/:id', auth, deleteProgramHistory)
-route.delete('/delet-histoy-without-prId',deletePrHistWithoutPrId)
 
 //homepage slider routes
-route.post('/add-slider', addSlider)
+route.post('/add-slider', auth, addSlider)
 route.get('/get-sliders', getSliders)
 route.get('/get-slider/:id', getSliderById)
-route.put('/edit-slider/:id', editSlider)
-route.put('/save-slider', saveSlider)
-route.delete('/delete-slider/:id', deleteSlider)
+route.put('/edit-slider/:id', auth, editSlider)
+route.put('/save-slider', auth, saveSlider)
+route.delete('/delete-slider/:id', auth, deleteSlider)
 
 //homepage Live Link routes
-route.post('/add-livelink', addLiveLink)
+route.post('/add-livelink', auth, addLiveLink)
 route.get('/get-livelink', getLiveLink)
 route.get('/get-livelink/:id', getLiveLinkById)
-route.put('/edit-live-link/:id', editLiveLink)
-route.delete('/delete-livelink/:id', deleteLiveLink)
+route.put('/edit-live-link/:id', auth, editLiveLink)
+route.delete('/delete-livelink/:id', auth, deleteLiveLink)
 
 //homepage Banners routes
-route.post('/add-banner', addBanner)
+route.post('/add-banner', auth, addBanner)
 route.get('/get-banners', getBanners)
 route.get('/get-banner/:id', getBannerById)
-route.put('/edit-banner/:id', editBanner)
-route.delete('/delete-banner/:id', deleteBanner)
+route.put('/edit-banner/:id', auth, editBanner)
+route.delete('/delete-banner/:id', auth, deleteBanner)
 
 //homepage Social Media Link routes
-route.post('/add-media-link', addSocialMediaLink)
+route.post('/add-media-link', auth, addSocialMediaLink)
 route.get('/get-media-links', getSocialMediaLinks)
 route.get('/get-media-link/:id', getSocialMediaLinkById)
-route.put('/edit-media-link/:id', editSocialMediaLink)
-route.delete('/delete-media-link/:id', deleteSocialMediaLink)
+route.put('/edit-media-link/:id', auth, editSocialMediaLink)
+route.delete('/delete-media-link/:id', auth, deleteSocialMediaLink)
 
 //homepage Footer routes
-route.post('/add-footer', addFooter)
+route.post('/add-footer', auth, addFooter)
 route.get('/get-footer', getFooter)
 route.get('/get-footer/:id', getFooterById)
-route.put('/edit-footer/:id', editFooter)
-route.delete('/delete-footer/:id', deleteFooter)
+route.put('/edit-footer/:id', auth, editFooter)
+route.delete('/delete-footer/:id', auth, deleteFooter)
 
 //page content routes
-route.post('/add-page-content', addPageContent)
+route.post('/add-page-content', auth, addPageContent)
 route.get('/get-page-contents', getPageContent)
-route.put('/edit-page-content/:id', editPageContent)
-route.delete('/delete-page-content/:id', deletePageContent)
+route.put('/edit-page-content/:id', auth, editPageContent)
+route.delete('/delete-page-content/:id', auth, deletePageContent)
 
 //faces routes
-route.post('/add-face', addFace)
+route.post('/add-face', auth, addFace)
 route.get('/get-faces', getFaces)
 route.get('/get-face/:id', getFaceById)
-route.put('/edit-face/:id', editFace)
-route.delete('/delete-face/:id', deleteFace)
+route.put('/edit-face/:id', auth, editFace)
+route.delete('/delete-face/:id', auth, deleteFace)
 
 //contact us routes
-route.post('/add-contact', addContact)
+route.post('/add-contact', auth, addContact)
 route.get('/get-contact', getContact)
-route.put('/edit-contact/:id', editContact)
-route.delete('/delete-contact/:id', deleteContact)
+route.put('/edit-contact/:id', auth, editContact)
+route.delete('/delete-contact/:id', auth, deleteContact)
 route.post('/send-email-21tv', sendEmailTo21TV)
 
 //search routes
