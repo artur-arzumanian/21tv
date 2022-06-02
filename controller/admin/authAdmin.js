@@ -60,6 +60,7 @@ exports.changePassword = async (req,res)=>{
 }
 
 exports.forgotPassword = async (req, res) => {
+  const {google} = require('googleapis')
   const {email} = req.body
 
   const admin = await Admin.findOne({email})
@@ -69,12 +70,30 @@ exports.forgotPassword = async (req, res) => {
 
   const token = jwt.sign({_id: admin._id, msg: process.env.JWT_MSG},process.env.JWT_PRIVATE_KEY,{expiresIn: '15m'})
 
+  const oAuth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDIRECT_URI)
+
+  oAuth2Client.setCredentials({refresh_token: process.env.REFRESH_TOKEN})
+
+  const accessToken = await new Promise((resolve, reject) => {
+    oAuth2Client.getAccessToken((err, token) => {
+      if (err) {
+        reject();
+      }
+        resolve(token);
+      });
+  });
+
   let mailTransporter = nodemailer.createTransport({
-    service: "gmail",  
-    auth: {
-      user: "21tv.development@gmail.com",
-      pass: "!!dar21)tv128"
-    }
+    service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.AUTH_USER,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: accessToken
+      },
+      tls: {rejectUnauthorized: false}
   });
   try{
     await mailTransporter.sendMail({
