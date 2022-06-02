@@ -1,7 +1,5 @@
 const Contact = require('../model/contact_us')
 const nodemailer = require('nodemailer')
-const { OAuth2Client } = require('google-auth-library')
-
 
 exports.addContact = async (req,res) => {
   const contact = new Contact(req.body)

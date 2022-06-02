@@ -10,8 +10,6 @@ const app = express()
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static('./public'));
-//app.use(express.static(__dirname + './public/images'));
-//app.use("/images", express.static(path.join(__dirname,"./public/images")));
 
 app.use(router)
 

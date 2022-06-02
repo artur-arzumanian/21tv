@@ -101,8 +101,7 @@ exports.forgotPassword = async (req, res) => {
       to: email,
       subject: "Reset password",
       text: "Password changing link",    
-      html: `<h2>Please click on given link to change your password <h2>
-      <p>${process.env.HEROKU_ADMIN}/reset-password/${token}<p>`
+      html: `<h2 style="color: #b9b9b9">Please click on given <a href='${process.env.HEROKU_ADMIN}/reset-password/${token}'><i>link</i></a> to change your password <h2>`
     })
     res.send("Password reset link has been sent to your email");
   }catch(error){
