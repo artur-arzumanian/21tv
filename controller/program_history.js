@@ -100,18 +100,18 @@ exports.search = async (req,res) =>{
     const searchProgram = await Program.find(
       {
         $or: [
-          {"name.am": {$regex: req.params.key, $options: 'i'}},
-          {"name.ru": {$regex: req.params.key, $options: 'i'}},
-          {"name.en": {$regex: req.params.key, $options: 'i'}}
+          {"name.am": {$regex: req.params.key.trim(), $options: 'i'}},
+          {"name.ru": {$regex: req.params.key.trim(), $options: 'i'}},
+          {"name.en": {$regex: req.params.key.trim(), $options: 'i'}}
         ]
       })
       
-      const searchProgramHistory = await ProgramHistory.find(
+    const searchProgramHistory = await ProgramHistory.find(
       {
         $or: [
-          {"title.am": {$regex: req.params.key, $options: 'i'}},
-          {"title.ru": {$regex: req.params.key, $options: 'i'}},
-          {"title.en": {$regex: req.params.key, $options: 'i'}}
+          {"title.am": {$regex: req.params.key.trim(), $options: 'i'}},
+          {"title.ru": {$regex: req.params.key.trim(), $options: 'i'}},
+          {"title.en": {$regex: req.params.key.trim(), $options: 'i'}}
         ]
       })
     res.status(200).send({searchProgramHistory, searchProgram})
