@@ -137,7 +137,7 @@ exports.sendEmailTo21TV = async (req,res) => {
         if (error) {        
           res.status(500).send({msg: "Email hasn't been sent", error})
         }else{
-          res.status(500).send({msg: "Email has been sent", response});
+          res.status(200).send({msg: "Email has been sent", response});
         }
       }); 
     }); 
