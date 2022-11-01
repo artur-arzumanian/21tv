@@ -54,96 +54,75 @@ exports.sendEmailTo21TV = async (req,res) => {
   var smtpTransport = require('nodemailer-smtp-transport');
   var handlebars = require('handlebars');
   var fs = require('fs');
- 
-  const {google} = require('googleapis')
-  const oAuth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDIRECT_URI)
-  oAuth2Client.setCredentials({refresh_token: process.env.REFRESH_TOKEN})
 
-  const accessToken = await new Promise((resolve, reject) => {
-    oAuth2Client.getAccessToken((err, token) => {
-      if (err) {
-        reject();
-      }
-        resolve(token);
-      });
-  });
-
-  if(accessToken){
-    var readHTMLFile = function(path, callback) {
-      fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
-          if (err) {
-            callback(err); 
-            throw err;
-              
-          }
-          else {
-            callback(null, html);
-          }
-      });
-    };
-
-    smtpTransport = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: process.env.AUTH_USER,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN,
-        accessToken: accessToken
-      },
-      tls: {rejectUnauthorized: false}
-    });
-
-    readHTMLFile(__dirname + '/../emailTamplate/emailTamplate.html', function(err, html) {
-      
-      if(err){
-        return res.send({msg: "Invalid path", error})
-      }
-      var template = handlebars.compile(html);
-      var replacements = {
-        lastName,
-        firstName,
-        email,
-        phone,
-        text
-      };
-      var htmlToSend = template(replacements);
-      var mailOptions = {
-        to: "21tv.development@gmail.com",
-        subject: "Contact us",
-        attachments: [
-          {
-            filename: 'email.png',
-            path: __dirname +'/../public/email_img/email.png',
-            cid: 'emailImg'
-          },
-          {
-            filename: 'phone.png',
-            path: __dirname +'/../public/email_img/phone.png',
-            cid: 'phoneImg'
-          },
-        
-          {
-            filename: 'logo.png',
-            path:  __dirname + '/../public/email_img/logo.png',
-            cid: 'logoImg'
-          }
-        ],
-        html: htmlToSend
-      }; 
-      
-      smtpTransport.sendMail(mailOptions, function (error, response) {
-        if (error) {        
-          res.status(500).send({msg: "Email hasn't been sent", error})
-        }else{
-          res.status(200).send({msg: "Email has been sent", response});
+  var readHTMLFile = function(path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+        if (err) {
+          callback(err); 
+          throw err;
+            
         }
-      }); 
-    }); 
+        else {
+          callback(null, html);
+        }
+    });
+  };
 
-  }else{
-    return res.status(500).send({msg: "Invalid access token"});
-  }
- 
+  smtpTransport = nodemailer.createTransport({
+    host: 'smtp.zoho.com',
+    port: 465,
+    secure: true,
+    auth: {        
+      user: process.env.ZOHO_AUTH_USER,
+      pass: process.env.ZOHO_AUTH_PASS
+    }
+  });
+  readHTMLFile(__dirname + '/../emailTamplate/emailTamplate.html', function(err, html) {
+    
+    if(err){
+      return res.send({msg: "Invalid path", error})
+    }
+    var template = handlebars.compile(html);
+    var replacements = {
+      lastName,
+      firstName,
+      email,
+      phone,
+      text
+    };
+    var htmlToSend = template(replacements);
+    var mailOptions = {
+      from: process.env.ZOHO_AUTH_USER,
+      to: process.env.DAR21_EMAIL,
+      subject: "Contact us",
+      attachments: [
+        {
+          filename: 'email.png',
+          path: __dirname +'/../public/email_img/email.png',
+          cid: 'emailImg'
+        },
+        {
+          filename: 'phone.png',
+          path: __dirname +'/../public/email_img/phone.png',
+          cid: 'phoneImg'
+        },
+      
+        {
+          filename: 'logo.png',
+          path:  __dirname + '/../public/email_img/logo.png',
+          cid: 'logoImg'
+        }
+      ],
+      html: htmlToSend
+    }; 
+    
+    smtpTransport.sendMail(mailOptions, function (error, response) {
+      if (error) {        
+        res.status(500).send({msg: "Email hasn't been sent", error: error.response})
+      }else{
+        res.status(200).send({msg: "Email has been sent", response: response.response});
+      }
+    }); 
+  }); 
+
 }
