@@ -356,7 +356,7 @@ npm install
 
 Nginx is located at etc/nginx
 
-For 21-frontend-react
+### For 21-frontend-react
 
 ```
 cd
@@ -391,7 +391,7 @@ Check if nginx is working fine
 sudo nginx -t
 ```
 
-For 21-admin-react
+### For 21-admin-react
 
 ```
 cd
@@ -436,10 +436,8 @@ ln -s /etc/nginx/sites-available/admin /etc/nginx/sites-enabled/
 ```
 
 
-For 21tv-backend-node-express
+### For 21tv-backend-node-express
 
-We can then run it normally, and it will run, but not on the internet, this means we have to find ways of
-making the api accessible online.
 
 Add Environmental Variables
 
@@ -461,6 +459,8 @@ Force your current session to read the file now by typing:
 source ~/.bashrc
 ```
 
+We can then run it normally, and it will run, but not on the internet, this means we have to find ways of
+making the api accessible online.
 
 
 ```
