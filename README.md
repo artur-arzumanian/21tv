@@ -438,8 +438,31 @@ ln -s /etc/nginx/sites-available/admin /etc/nginx/sites-enabled/
 
 For 21tv-backend-node-express
 
-We can then run it normally, and it will run, but not on the internet, this means we have to find was of
+We can then run it normally, and it will run, but not on the internet, this means we have to find ways of
 making the api accessible online.
+
+Add Environmental Variables
+
+Open this file now:
+
+```
+nano ~/.bashrc
+```
+
+Export Environmental Variables
+
+```
+export VARNAME=value
+```
+
+Force your current session to read the file now by typing:
+
+```
+source ~/.bashrc
+```
+
+
+
 ```
 cd var/www/html/web_app/21tv_node_api
 
