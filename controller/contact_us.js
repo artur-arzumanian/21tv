@@ -51,11 +51,11 @@ exports.deleteContact = async (req,res) => {
 exports.sendEmailTo21TV = async (req,res) => {  
 
   const {email,phone,firstName,lastName,text} = req.body
-  var smtpTransport = require('nodemailer-smtp-transport');
-  var handlebars = require('handlebars');
-  var fs = require('fs');
+  let smtpTransport = require('nodemailer-smtp-transport');
+  const handlebars = require('handlebars');
+  const fs = require('fs');
 
-  var readHTMLFile = function(path, callback) {
+  const readHTMLFile = function(path, callback) {
     fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
         if (err) {
           callback(err); 
@@ -82,16 +82,16 @@ exports.sendEmailTo21TV = async (req,res) => {
     if(err){
       return res.send({msg: "Invalid path", error})
     }
-    var template = handlebars.compile(html);
-    var replacements = {
+    const template = handlebars.compile(html);
+    const replacements = {
       lastName,
       firstName,
       email,
       phone,
       text
     };
-    var htmlToSend = template(replacements);
-    var mailOptions = {
+    const htmlToSend = template(replacements);
+    const mailOptions = {
       from: process.env.ZOHO_AUTH_USER,
       to: process.env.DAR21_EMAIL,
       subject: "Contact us",
